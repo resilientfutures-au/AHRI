@@ -929,9 +929,21 @@ function submitSurvey() {
   }
   document.getElementById('val-msg').style.display = 'none';
 
+  // Merge _other and _comment text into their parent answers before sending
+  const mergedAnswers = Object.assign({}, answers);
+  Object.keys(mergedAnswers).forEach(k => {
+    if (k.endsWith('_other')) {
+      const parent = k.replace('_other', '');
+      if (mergedAnswers[parent] === 'Other' && mergedAnswers[k] && mergedAnswers[k].trim()) {
+        mergedAnswers[parent] = 'Other: ' + mergedAnswers[k].trim();
+      }
+      delete mergedAnswers[k];
+    }
+  });
+
   const result = {
     surveyType: 'internal',
-    answers,
+    answers: mergedAnswers,
     submittedAt: new Date().toISOString()
   };
 
