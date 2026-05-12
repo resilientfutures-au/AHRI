@@ -424,7 +424,7 @@
       <span class="org-label">AHRI · Strategic Planning 2026–2030</span>
       <h1>SOR <em>Prioritisation</em> Survey</h1>
       <p class="intro-text">This survey asks you to assess each Enterprise Strategy Opportunity-Risk (E-SOR) against 14 prioritisation criteria. Your responses will inform AHRI's leadership on which strategic opportunities to pursue first and with what intensity.</p>
-      <p class="intro-text">For each criterion, rate on a scale of <strong>1 to 7</strong> — anchors are shown per question. There are no right or wrong answers; we are seeking your honest, informed judgement based on current organisational context.</p>
+      <p class="intro-text">For each criterion, rate on a scale of <strong>1 to 7</strong>, anchors are shown per question. There are no right or wrong answers; we are seeking your honest, informed judgement based on current organisational context.</p>
       <p class="intro-text">The survey covers <strong>six E-SORs</strong>, each assessed on 14 criteria. Your progress is automatically saved.</p>
       <div class="meta-row">
         <span class="meta-item">
@@ -450,7 +450,7 @@
     <div class="info-box">
       <h3>How to use this survey</h3>
       <p>Each row is a prioritisation criterion. For each E-SOR, select a number from <strong>1</strong> (fully aligns with the low anchor) to <strong>7</strong> (fully aligns with the high anchor). <strong>4</strong> is the neutral midpoint.</p>
-      <p>Rate each E-SOR independently, based on AHRI's current capabilities and context — not an ideal future state. Consider the full question text and hint shown in each row.</p>
+      <p>Rate each E-SOR independently, based on AHRI's current capabilities and context, not an ideal future state. Consider the full question text and hint shown in each row.</p>
     </div>
 
     <div id="sections-container"></div>
@@ -460,7 +460,7 @@
         Submit responses
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
-      <p class="validation-msg" id="val-msg">Please review your responses — some fields appear incomplete.</p>
+      <p class="validation-msg" id="val-msg">Please review your responses; some fields appear incomplete.</p>
     </div>
 
   </div><!-- /#survey-form -->
@@ -483,32 +483,32 @@ const esors = [
   {
     id: 1,
     title: 'Scope of Play',
-    desc: 'Redefining the boundaries of AHRI\'s professional remit — from a narrow HR professional body to the leading authority on the modern workplace.'
+    desc: 'Redefining the boundaries of AHRI\'s professional remit, from a narrow HR professional body to the leading authority on the modern workplace.'
   },
   {
     id: 2,
     title: 'Certification and Professional Pathway',
-    desc: 'Transforming AHRI certification into the recognised, market-mandated professional standard for HR in Australia — analogous to CPA for accounting.'
+    desc: 'Transforming AHRI certification into the recognised, market-mandated professional standard for HR in Australia, analogous to CPA for accounting.'
   },
   {
     id: 3,
     title: 'AI and Workforce Transformation',
-    desc: 'Positioning the HR profession as the essential lead function for responsible, human-centred AI deployment — and AHRI as the authoritative voice on the people dimension of AI transformation.'
+    desc: 'Positioning the HR profession as the essential lead function for responsible, human-centred AI deployment, and AHRI as the authoritative voice on the people dimension of AI transformation.'
   },
   {
     id: 4,
     title: 'Advocacy and Strategic Voice',
-    desc: 'Asserting AHRI as the definitive expert voice on the future of work in Australia — providing trusted policy guidance and becoming the go-to reference for government, media, and business.'
+    desc: 'Asserting AHRI as the definitive expert voice on the future of work in Australia, providing trusted policy guidance and becoming the go-to reference for government, media, and business.'
   },
   {
     id: 5,
     title: 'Platform / Ecosystem Model',
-    desc: 'Repositioning AHRI as a curated platform — the quality-assured, trusted connector for HR professional development and services across a partner ecosystem.'
+    desc: 'Repositioning AHRI as a curated platform: the quality-assured, trusted connector for HR professional development and services across a partner ecosystem.'
   },
   {
     id: 6,
     title: 'Membership & Member Economics',
-    desc: 'Redesigning the membership model — from annual fee to a flexible, guild-based ecosystem serving the full 200,000+ HR profession at different tiers of engagement.'
+    desc: 'Redesigning the membership model, from annual fee to a flexible, guild-based ecosystem serving the full 200,000+ HR profession at different tiers of engagement.'
   }
 ];
 
@@ -517,7 +517,7 @@ const questions = [
     id: 1,
     title: '1. Scale of Impact',
     text: 'If activated successfully, how significant is the scale of strategic advantage or value created for AHRI and its value network?',
-    hint: 'Consider value exchange (delivery and capture), strategic position (Shaper vs. Enabler), and durability — is the advantage sustained or quickly eroded?',
+    hint: 'Consider value exchange (delivery and capture), strategic position (Shaper vs. Enabler), and durability: is the advantage sustained or quickly eroded?',
     low: 'Marginal impact',
     high: 'Transformative impact'
   },
@@ -539,8 +539,8 @@ const questions = [
   },
   {
     id: 4,
-    title: '4. Lag Time — Systemic Effect Speed',
-    text: 'Once activated, how quickly does this SOR produce meaningful systemic effect — a visible shift in position, behaviour, or outcomes across the value network?',
+    title: '4. Lag Time: Systemic Effect Speed',
+    text: 'Once activated, how quickly does this SOR produce meaningful systemic effect, a visible shift in position, behaviour, or outcomes across the value network?',
     hint: 'Some SORs start quickly but take years to register in the system. Score high if effect is rapid; score low if there is a long lag between action and visible outcome.',
     low: 'Significant lag (potentially years)',
     high: 'Rapid (weeks to months)'
@@ -564,7 +564,7 @@ const questions = [
   {
     id: 7,
     title: '7. Strategic Advantage',
-    text: 'To what extent does activating this SOR generate a disproportionate, non-replicable advantage — one that others cannot easily copy or neutralise?',
+    text: 'To what extent does activating this SOR generate a disproportionate, non-replicable advantage, one that others cannot easily copy or neutralise?',
     hint: 'Score high if the organisation is uniquely placed to capture this value. Score low if the advantage is generic or easily matched by others.',
     low: 'Easily replicated',
     high: 'Uniquely ours to capture'
@@ -589,7 +589,7 @@ const questions = [
     id: 10,
     title: '10. Capability-Building Return',
     text: 'To what extent does activating this SOR build organisational capabilities needed for the next strategic cycle, regardless of whether this SOR fully succeeds?',
-    hint: 'Score high if activation develops durable muscle — decision systems, relationships, institutional knowledge, operational platforms — that compounds over time.',
+    hint: 'Score high if activation develops durable muscle, including decision systems, relationships, institutional knowledge, operational platforms, that compounds over time.',
     low: 'Consumes without building',
     high: 'Strong compounding return'
   },
@@ -597,22 +597,22 @@ const questions = [
     id: 11,
     title: '11. Learning Velocity',
     text: 'Does activating this SOR generate learning and adaptive intelligence that remains useful and transferable, even if conditions shift or we need to pivot?',
-    hint: 'Score high if the knowledge and organisational reflexes built during activation are portable — they inform the next move rather than becoming stranded assets.',
-    low: 'Stranded learning — dead weight if we pivot',
+    hint: 'Score high if the knowledge and organisational reflexes built during activation are portable; they inform the next move rather than becoming stranded assets.',
+    low: 'Stranded learning, dead weight if we pivot',
     high: 'Fully transferable momentum'
   },
   {
     id: 12,
     title: '12. Value Network Alignment Effort',
     text: 'How would you characterise the nature and depth of effort required to bring necessary stakeholders in our value network along in support of this SOR?',
-    hint: 'Consider the quality of effort required — informing vs. genuinely changing deeply held positions. Score high if alignment effort is light and relationships are already primed; score low if sustained negotiation or trust-building is required.',
+    hint: 'Consider the quality of effort required, such as informing vs. genuinely changing deeply held positions. Score high if alignment effort is light and relationships are already primed; score low if sustained negotiation or trust-building is required.',
     low: 'Deep, complex alignment required',
     high: 'Light touch, relationships primed'
   },
   {
     id: 13,
     title: '13. Resource & Effort Consumption',
-    text: 'What is the ongoing cost of keeping this SOR activated — in terms of leadership attention, operational bandwidth, and financial resources — relative to the value it generates at each stage?',
+    text: 'What is the ongoing cost of keeping this SOR activated, in terms of leadership attention, operational bandwidth, and financial resources, relative to the value it generates at each stage?',
     hint: 'Once running, does this SOR sustain itself efficiently, or does it continuously draw on scarce capacity? Score high if self-sustaining and lean; score low if it is a persistent drain requiring constant feeding or management overhead.',
     low: 'Persistent drain on capacity',
     high: 'Self-sustaining and lean'
@@ -620,7 +620,7 @@ const questions = [
   {
     id: 14,
     title: '14. Strategic Fitness Contribution',
-    text: 'To what extent does activating this SOR strengthen — rather than strain or degrade — our organisational fitness across workability, decision systems, operating rhythms, and pivot capacity?',
+    text: 'To what extent does activating this SOR strengthen, rather than strain or degrade, our organisational fitness across workability, decision systems, operating rhythms, and pivot capacity?',
     hint: 'Score high if activation builds governance quality, sharpens decision discipline, and maintains our ability to adapt and redirect. Score low if it locks down operating rhythms or reduces our capacity to pivot.',
     low: 'Strains or degrades fitness',
     high: 'Materially strengthens fitness'
