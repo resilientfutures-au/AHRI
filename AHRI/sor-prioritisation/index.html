@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHRI — SOR Prioritisation Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #3d3d3d;
+    --cream: #ffffff;
+    --gold: #a44f43;
+    --gold-light: #bc6e63;
+    --border: #d4d4d4;
+    --row-hover: #fafafa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 100;
+  }
+  #progress-bar {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* ── LAYOUT ── */
+  .survey-shell {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding-top: 20px;
+  }
+
+  .org-wordmark {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+
+  /* ── SURVEY HEADER ── */
+  .survey-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 48px;
+    margin-bottom: 48px;
+  }
+  .survey-header .org-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .survey-header h1 {
+    font-size: clamp(26px, 5vw, 42px);
+    line-height: 1.12;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .survey-header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .survey-header .intro-text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-light);
+    max-width: 700px;
+    margin-bottom: 12px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .meta-item {
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── RESUME BANNER ── */
+  #resume-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #f5f0ef;
+    border: 1px solid #d9c5c2;
+    border-left: 3px solid var(--gold);
+    padding: 12px 18px;
+    margin-bottom: 32px;
+    border-radius: 0 2px 2px 0;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  #resume-banner .resume-time { font-weight: 600; color: var(--ink); }
+  #resume-banner button {
+    background: none;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    border-radius: 0 2px 2px 0;
+  }
+  .info-box h3 {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .info-box p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+  .info-box p:last-child { margin-bottom: 0; }
+
+  /* ── SECTION ── */
+  .section-block {
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section-block.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gold);
+  }
+  .section-number {
+    font-size: 36px;
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 300;
+    font-family: 'Nunito Sans', sans-serif;
+    min-width: 48px;
+  }
+  .section-title {
+    font-size: 20px;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-bottom: 24px;
+    font-style: italic;
+    padding-left: 64px;
+  }
+
+  /* ── MATRIX GRID ── */
+  .matrix-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 680px;
+    table-layout: fixed;
+  }
+
+  /* Header row */
+  .matrix-table thead th {
+    padding: 12px 6px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-light);
+    border-bottom: 2px solid var(--border);
+    vertical-align: bottom;
+  }
+  .matrix-table thead th.q-header {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    padding-left: 0;
+    width: 46%;
+  }
+  .matrix-table thead th.scale-num {
+    width: calc(54% / 7);
+    min-width: 46px;
+  }
+
+  /* Scale anchor row */
+  .matrix-table thead .anchor-row th {
+    font-size: 10px;
+    color: var(--ink-light);
+    font-weight: 400;
+    font-style: italic;
+    padding: 4px 4px 10px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .matrix-table thead .anchor-row th.q-header {
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* Body rows */
+  .matrix-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .matrix-table tbody tr:last-child { border-bottom: none; }
+  .matrix-table tbody tr:hover td { background: var(--row-hover); }
+
+  .matrix-table tbody td {
+    padding: 16px 6px;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .matrix-table tbody td.q-cell {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 20px;
+    vertical-align: top;
+    padding-top: 20px;
+  }
+
+  .q-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 5px;
+    letter-spacing: 0.01em;
+  }
+  .q-text {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  .q-hint {
+    display: block;
+    font-size: 11.5px;
+    color: #888;
+    line-height: 1.5;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+  .q-anchors {
+    display: block;
+    font-size: 10.5px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  /* Rating buttons */
+  .rate-btn {
+    width: 38px;
+    height: 38px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--ink-light);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rate-btn:hover {
+    border-color: var(--gold);
+    color: var(--ink);
+    background: #faf5f4;
+  }
+  .rate-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  /* Unanswered highlight */
+  .matrix-table tbody tr.unanswered td.q-cell .q-title { color: #c0392b; }
+
+  /* ── SUBMIT ── */
+  .submit-zone {
+    text-align: center;
+    padding-top: 56px;
+    border-top: 1px solid var(--border);
+  }
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 48px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { background: var(--gold); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .validation-msg {
+    display: none;
+    color: var(--gold);
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 80px 20px;
+  }
+  .success-screen .check {
+    width: 56px;
+    height: 56px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .success-screen h2 {
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .success-screen p {
+    color: var(--ink-light);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    .survey-shell { padding: 40px 16px 80px; }
+    .section-subtitle { padding-left: 0; }
+    .rate-btn { width: 32px; height: 32px; font-size: 12px; }
+    .matrix-table thead th.q-header { width: 40%; }
+    .section-title { font-size: 17px; }
+    .section-number { font-size: 28px; min-width: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div class="survey-shell">
+
+  <div class="header-top">
+    <span class="org-wordmark">AHRI</span>
+  </div>
+
+  <div id="survey-form">
+
+    <div class="survey-header">
+      <span class="org-label">AHRI · Strategic Planning 2026–2030</span>
+      <h1>SOR <em>Prioritisation</em> Survey</h1>
+      <p class="intro-text">This survey asks you to assess each Enterprise Strategy Opportunity-Risk (ESOR) against 14 prioritisation criteria. Your responses will inform AHRI's leadership on which strategic opportunities to pursue first and with what intensity.</p>
+      <p class="intro-text">For each criterion, rate on a scale of <strong>1 to 7</strong> — anchors are shown per question. There are no right or wrong answers; we are seeking your honest, informed judgement based on current organisational context.</p>
+      <p class="intro-text">The survey covers <strong>six ESORs</strong>, each assessed on 14 criteria. Your progress is automatically saved.</p>
+      <div class="meta-row">
+        <span class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          30–45 minutes
+        </span>
+        <span class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Confidential
+        </span>
+        <span class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          6 ESORs · 14 criteria each
+        </span>
+      </div>
+    </div>
+
+    <div id="resume-banner">
+      <span class="resume-time"></span>
+      <button onclick="clearProgress()">Clear saved progress</button>
+    </div>
+
+    <div class="info-box">
+      <h3>How to use this survey</h3>
+      <p>Each row is a prioritisation criterion. For each ESOR, select a number from <strong>1</strong> (fully aligns with the low anchor) to <strong>7</strong> (fully aligns with the high anchor). <strong>4</strong> is the neutral midpoint.</p>
+      <p>Rate each ESOR independently, based on AHRI's current capabilities and context — not an ideal future state. Consider the full question text and hint shown in each row.</p>
+    </div>
+
+    <div id="sections-container"></div>
+
+    <div class="submit-zone">
+      <button class="submit-btn" onclick="submitSurvey()">
+        Submit responses
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <p class="validation-msg" id="val-msg">Please review your responses — some fields appear incomplete.</p>
+    </div>
+
+  </div><!-- /#survey-form -->
+
+  <div class="success-screen" id="success-screen">
+    <div class="check">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Thank you for your input.</h2>
+    <p>Your SOR prioritisation responses have been recorded. AHRI's leadership team will use these responses to inform the next phase of strategic planning.</p>
+  </div>
+
+</div><!-- /.survey-shell -->
+
+<script>
+
+const STORAGE_KEY = 'ahri_sor_prioritisation_v1';
+
+const esors = [
+  {
+    id: 1,
+    title: 'Scope of Play',
+    desc: 'Redefining the boundaries of AHRI\'s professional remit — from a narrow HR professional body to the leading authority on the modern workplace.'
+  },
+  {
+    id: 2,
+    title: 'Certification and Professional Pathway',
+    desc: 'Transforming AHRI certification into the recognised, market-mandated professional standard for HR in Australia — analogous to CPA for accounting.'
+  },
+  {
+    id: 3,
+    title: 'AI and Workforce Transformation',
+    desc: 'Positioning the HR profession as the essential lead function for responsible, human-centred AI deployment — and AHRI as the authoritative voice on the people dimension of AI transformation.'
+  },
+  {
+    id: 4,
+    title: 'Advocacy and Strategic Voice',
+    desc: 'Asserting AHRI as the definitive expert voice on the future of work in Australia — providing trusted policy guidance and becoming the go-to reference for government, media, and business.'
+  },
+  {
+    id: 5,
+    title: 'Platform / Ecosystem Model',
+    desc: 'Repositioning AHRI as a curated platform — the quality-assured, trusted connector for HR professional development and services across a partner ecosystem.'
+  },
+  {
+    id: 6,
+    title: 'Membership & Member Economics',
+    desc: 'Redesigning the membership model — from annual fee to a flexible, guild-based ecosystem serving the full 200,000+ HR profession at different tiers of engagement.'
+  }
+];
+
+const questions = [
+  {
+    id: 1,
+    title: '1. Scale of Impact',
+    text: 'If activated successfully, how significant is the scale of strategic advantage or value created for AHRI and its value network?',
+    hint: 'Consider value exchange (delivery and capture), strategic position (Shaper vs. Enabler), and durability — is the advantage sustained or quickly eroded?',
+    low: 'Marginal impact',
+    high: 'Transformative impact'
+  },
+  {
+    id: 2,
+    title: '2. Conditions Volatility',
+    text: 'How likely is it that the pattern of conditions underpinning this SOR will shift before activation and benefits realisation?',
+    hint: 'Test for patterns of both immediate and emerging conditions.',
+    low: 'Weak signal, less predictable',
+    high: 'Pattern more predictable, stronger signal'
+  },
+  {
+    id: 3,
+    title: '3. Conditions Timing',
+    text: 'How well do current conditions, relationships, political context, and stakeholder readiness align with what this SOR requires to succeed?',
+    hint: 'Score high if conditions are ripe now. Score low if we are ahead of the market or facing structural resistance that has not yet softened.',
+    low: 'Conditions not yet aligned',
+    high: 'Fully aligned right now'
+  },
+  {
+    id: 4,
+    title: '4. Lag Time — Systemic Effect Speed',
+    text: 'Once activated, how quickly does this SOR produce meaningful systemic effect — a visible shift in position, behaviour, or outcomes across the value network?',
+    hint: 'Some SORs start quickly but take years to register in the system. Score high if effect is rapid; score low if there is a long lag between action and visible outcome.',
+    low: 'Significant lag (potentially years)',
+    high: 'Rapid (weeks to months)'
+  },
+  {
+    id: 5,
+    title: '5. Speed of Activation',
+    text: 'How quickly can we initiate this SOR and begin meaningful implementation, given our current state of readiness?',
+    hint: 'High = we can move within weeks. Low = significant setup, approvals, or capability-building required before anything real begins.',
+    low: 'Long lead time required',
+    high: 'Can move immediately'
+  },
+  {
+    id: 6,
+    title: '6. Systemic Responses',
+    text: 'How much does activating this SOR expose the organisation to competitive retaliation, political resistance, or adverse systemic responses from those who stand to lose from our advantage?',
+    hint: 'Higher arbitrage and higher opportunity often attract higher counter-response. Score the exposure, not just the upside.',
+    low: 'Minimal counter response',
+    high: 'High exposure to retaliation'
+  },
+  {
+    id: 7,
+    title: '7. Strategic Advantage',
+    text: 'To what extent does activating this SOR generate a disproportionate, non-replicable advantage — one that others cannot easily copy or neutralise?',
+    hint: 'Score high if the organisation is uniquely placed to capture this value. Score low if the advantage is generic or easily matched by others.',
+    low: 'Easily replicated',
+    high: 'Uniquely ours to capture'
+  },
+  {
+    id: 8,
+    title: '8. Reversibility & Optionality',
+    text: 'If conditions change materially after we activate this SOR, how easy is it to stop, redirect, or significantly alter course without severe cost or consequence?',
+    hint: 'Score high if we retain meaningful optionality, early exits are feasible, and sunk costs are low. Score low if activation is largely irreversible or forecloses other strategic paths.',
+    low: 'Largely irreversible',
+    high: 'High optionality retained'
+  },
+  {
+    id: 9,
+    title: '9. Capability Readiness',
+    text: 'How ready are our current resources, capabilities, and structures to activate this SOR at the required level of quality and pace?',
+    hint: 'Score what we have now, not what we could build. Consider people, systems, financial headroom, and governance capacity.',
+    low: 'Far from ready',
+    high: 'Fully ready now'
+  },
+  {
+    id: 10,
+    title: '10. Capability-Building Return',
+    text: 'To what extent does activating this SOR build organisational capabilities needed for the next strategic cycle, regardless of whether this SOR fully succeeds?',
+    hint: 'Score high if activation develops durable muscle — decision systems, relationships, institutional knowledge, operational platforms — that compounds over time.',
+    low: 'Consumes without building',
+    high: 'Strong compounding return'
+  },
+  {
+    id: 11,
+    title: '11. Learning Velocity',
+    text: 'Does activating this SOR generate learning and adaptive intelligence that remains useful and transferable, even if conditions shift or we need to pivot?',
+    hint: 'Score high if the knowledge and organisational reflexes built during activation are portable — they inform the next move rather than becoming stranded assets.',
+    low: 'Stranded learning — dead weight if we pivot',
+    high: 'Fully transferable momentum'
+  },
+  {
+    id: 12,
+    title: '12. Value Network Alignment Effort',
+    text: 'How would you characterise the nature and depth of effort required to bring necessary stakeholders in our value network along in support of this SOR?',
+    hint: 'Consider the quality of effort required — informing vs. genuinely changing deeply held positions. Score high if alignment effort is light and relationships are already primed; score low if sustained negotiation or trust-building is required.',
+    low: 'Deep, complex alignment required',
+    high: 'Light touch, relationships primed'
+  },
+  {
+    id: 13,
+    title: '13. Resource & Effort Consumption',
+    text: 'What is the ongoing cost of keeping this SOR activated — in terms of leadership attention, operational bandwidth, and financial resources — relative to the value it generates at each stage?',
+    hint: 'Once running, does this SOR sustain itself efficiently, or does it continuously draw on scarce capacity? Score high if self-sustaining and lean; score low if it is a persistent drain requiring constant feeding or management overhead.',
+    low: 'Persistent drain on capacity',
+    high: 'Self-sustaining and lean'
+  },
+  {
+    id: 14,
+    title: '14. Strategic Fitness Contribution',
+    text: 'To what extent does activating this SOR strengthen — rather than strain or degrade — our organisational fitness across workability, decision systems, operating rhythms, and pivot capacity?',
+    hint: 'Score high if activation builds governance quality, sharpens decision discipline, and maintains our ability to adapt and redirect. Score low if it locks down operating rhythms or reduces our capacity to pivot.',
+    low: 'Strains or degrades fitness',
+    high: 'Materially strengthens fitness'
+  }
+];
+
+const answers = {};
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function renderSections() {
+  const container = document.getElementById('sections-container');
+  esors.forEach(esor => {
+    const block = document.createElement('div');
+    block.className = 'section-block';
+    block.id = 'esor-' + esor.id;
+
+    const numLabel = esor.id < 10 ? '0' + esor.id : '' + esor.id;
+
+    block.innerHTML =
+      '<div class="section-header">' +
+        '<span class="section-number">' + numLabel + '</span>' +
+        '<span class="section-title">ESOR ' + esor.id + ': ' + esor.title + '</span>' +
+      '</div>' +
+      '<p class="section-subtitle">' + esor.desc + '</p>' +
+      '<div class="matrix-wrap">' + renderMatrix(esor) + '</div>';
+
+    container.appendChild(block);
+  });
+}
+
+function renderMatrix(esor) {
+  const scaleNums = [1, 2, 3, 4, 5, 6, 7];
+
+  const headerCells = scaleNums.map(function(n) {
+    return '<th class="scale-num">' + n + '</th>';
+  }).join('');
+
+  const rows = questions.map(function(q) {
+    const key = 'esor' + esor.id + '_q' + q.id;
+
+    const btnCells = scaleNums.map(function(n) {
+      return '<td class="rating-cell">' +
+        '<button type="button" class="rate-btn" ' +
+          'data-key="' + key + '" ' +
+          'data-val="' + n + '" ' +
+          'onclick="selectRating(this)" ' +
+          'aria-label="Score ' + n + ' for ' + q.title + '">' +
+          n +
+        '</button>' +
+      '</td>';
+    }).join('');
+
+    return '<tr id="row-' + key + '">' +
+      '<td class="q-cell">' +
+        '<strong class="q-title">' + q.title + '</strong>' +
+        '<span class="q-text">' + q.text + '</span>' +
+        '<span class="q-hint">' + q.hint + '</span>' +
+        '<span class="q-anchors">1 = ' + q.low + '&nbsp;&nbsp;·&nbsp;&nbsp;7 = ' + q.high + '</span>' +
+      '</td>' +
+      btnCells +
+    '</tr>';
+  }).join('');
+
+  return '<table class="matrix-table" role="grid" aria-label="ESOR ' + esor.id + ': ' + esor.title + '">' +
+    '<thead>' +
+      '<tr>' +
+        '<th class="q-header">Criterion</th>' +
+        headerCells +
+      '</tr>' +
+    '</thead>' +
+    '<tbody>' + rows + '</tbody>' +
+  '</table>';
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────────────
+
+function selectRating(btn) {
+  var key = btn.dataset.key;
+  var val = btn.dataset.val;
+
+  document.querySelectorAll('.rate-btn[data-key="' + key + '"]').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+
+  answers[key] = val;
+
+  var row = document.getElementById('row-' + key);
+  if (row) row.classList.remove('unanswered');
+
+  updateProgress();
+  saveProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+
+function updateProgress() {
+  var total = esors.length * questions.length;
+  var answered = Object.keys(answers).filter(function(k) {
+    return answers[k];
+  }).length;
+  document.getElementById('progress-bar').style.width = Math.min(100, (answered / total * 100)) + '%';
+}
+
+// ── SAVE / RESTORE ────────────────────────────────────────────────────────────
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers: answers, savedAt: new Date().toISOString() }));
+  } catch(e) {}
+}
+
+function restoreProgress() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    if (!data.answers || !Object.keys(data.answers).length) return;
+
+    Object.keys(data.answers).forEach(function(key) {
+      var val = data.answers[key];
+      answers[key] = val;
+      var btn = document.querySelector('.rate-btn[data-key="' + key + '"][data-val="' + val + '"]');
+      if (btn) {
+        btn.classList.add('active');
+        var row = document.getElementById('row-' + key);
+        if (row) row.classList.remove('unanswered');
+      }
+    });
+
+    updateProgress();
+    showResumeBanner(data.savedAt);
+  } catch(e) {}
+}
+
+function showResumeBanner(savedAt) {
+  var banner = document.getElementById('resume-banner');
+  if (!banner) return;
+  var d = new Date(savedAt);
+  var label = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  banner.querySelector('.resume-time').textContent = 'Progress restored from ' + label;
+  banner.style.display = 'flex';
+}
+
+function clearProgress() {
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('resume-banner').style.display = 'none';
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+
+function submitSurvey() {
+  var result = {
+    surveyType: 'AHRI-SOR-Prioritisation',
+    answers: answers,
+    submittedAt: new Date().toISOString()
+  };
+
+  // Replace APPS_SCRIPT_URL with the deployed Google Apps Script web app URL
+  fetch('https://script.google.com/macros/s/AKfycbxbBPDEf0zkQk-05vCfwpGYl3U6493JqRwtrlo29A7OEvsfmX26nOkl_x9yQiS5p9iW_g/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(result)
+  }).catch(function() {});
+
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('survey-form').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SECTION FADE-IN ───────────────────────────────────────────────────────────
+
+function observeSections() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.section-block').forEach(function(el) {
+    obs.observe(el);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+
+renderSections();
+observeSections();
+restoreProgress();
+
+</script>
+</body>
+</html>
