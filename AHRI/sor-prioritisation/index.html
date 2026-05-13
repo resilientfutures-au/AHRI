@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -40,9 +40,9 @@ body {
 
 /* ── SHELL ── */
 .shell {
-  max-width: 1160px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 52px 32px 80px;
+  padding: 52px 24px 80px;
 }
 
 /* ── TOP HEADER ── */
@@ -109,7 +109,7 @@ body {
   font-weight: 600;
 }
 
-/* ── E-SOR CARD ── */
+/* ── Primary SOR CARD ── */
 .esor-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -148,7 +148,6 @@ body {
 
 /* ── MATRIX TABLE ── */
 .table-outer {
-  overflow-x: auto;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -156,15 +155,21 @@ body {
 }
 
 table.matrix {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
 }
 
-/* Column headers: sub-SORs */
+/* Column headers: sub-SORs — sticky so they stay visible while scrolling criteria */
 .matrix thead th {
   border-bottom: 2px solid var(--border);
   vertical-align: bottom;
   padding: 0;
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 1px 0 var(--border), 0 3px 6px rgba(0,0,0,0.04);
 }
 .matrix thead th.crit-head {
   width: 196px;
@@ -183,7 +188,7 @@ table.matrix {
   text-align: center;
   border-right: 1px solid var(--border);
   min-width: 150px;
-  max-width: 180px;
+  max-width: 200px;
 }
 .sub-sor-th:last-child { border-right: none; }
 .sub-sor-name {
@@ -199,12 +204,16 @@ table.matrix {
   -webkit-box-orient: vertical;
 }
 
-/* Body rows */
+/* Body rows — alternating shade for scannability */
 .matrix tbody tr {
   border-bottom: 1px solid var(--border);
 }
-.matrix tbody tr:last-child { border-bottom: none; }
-.matrix tbody tr:hover { background: #fafaf9; }
+.matrix tbody tr td {
+  border-bottom: 1px solid var(--border);
+}
+.matrix tbody tr:last-child td { border-bottom: none; }
+.matrix tbody tr:nth-child(even) td { background: #faf7f4; }
+.matrix tbody tr:hover td { background: #f3eae3; }
 
 .q-cell {
   padding: 10px 16px;
@@ -425,6 +434,18 @@ table.matrix {
   color: var(--ink);
   font-weight: 700;
 }
+.contact-card .overview-tip {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 12.5px;
+  color: var(--ink-light);
+  line-height: 1.55;
+}
+.contact-card .overview-tip strong {
+  color: var(--gold);
+  font-weight: 700;
+}
 @media (max-width: 540px) {
   .contact-card .overview ul.overview-stats { grid-template-columns: 1fr; }
 }
@@ -501,13 +522,14 @@ table.matrix {
       <p class="contact-sub">All responses are recorded and reported in aggregate — individual scores are never shared. A copy of your submitted responses will be emailed to you after submission for your records.</p>
       <div class="overview">
         <h3>About this survey</h3>
-        <p>This survey asks you to evaluate AHRI's six Enterprise Strategy Opportunity-Risks (E-SORs) and their 27 sub-SORs against 14 prioritisation criteria. Your responses will inform AHRI's leadership on which strategic opportunities to pursue first and with what intensity.</p>
+        <p>This survey asks you to evaluate AHRI's six Primary Strategy Opportunity-Risks (Primary SORs) and their sub-SORs against 14 prioritisation criteria. Your responses will inform AHRI's leadership on which SORs to pursue first and with what intensity.</p>
         <ul class="overview-stats">
-          <li><strong>6 E-SORs</strong> · one page each</li>
-          <li><strong>27 sub-SORs</strong> · 4-5 options per E-SOR</li>
+          <li><strong>6 Primary SORs</strong> · one page each</li>
+          <li><strong>32 sub-SORs</strong> · 5-6 per Primary SOR</li>
           <li><strong>14 criteria</strong> · rated 1 (low) to 7 (high)</li>
           <li><strong>~45 minutes</strong> · progress auto-saved</li>
         </ul>
+        <p class="overview-tip">Tip: click the <strong>▾</strong> arrow next to any criterion to reveal its full description and scoring guidance.</p>
       </div>
       <div class="field" id="field-name">
         <label for="input-name">Full Name</label>
@@ -522,7 +544,7 @@ table.matrix {
     </div>
   </div>
 
-  <!-- Pages 1-6: E-SOR survey -->
+  <!-- Pages 1-6: Primary SOR survey -->
   <div id="survey-page">
     <div class="esor-card">
       <div class="esor-badge" id="esor-badge"></div>
@@ -561,42 +583,45 @@ const esors = [
       'The Foundational Identity Choice',
       'Beyond HR: Redefining the Professional Boundary',
       'Whole-System Workforce Leadership > Filling the National Vacuum',
-      'Brand & Identity Evolution > From \'Human Resources\' to Contemporary Professional Home'
+      'Brand & Identity Evolution > From \'Human Resources\' Institute to Contemporary Professional Home',
+      'Strategic Letting Go > What AHRI Must Stop Doing'
     ]
   },
   {
     id: 2,
-    title: 'Certification & Professional Pathway',
+    title: 'Certification and Professional Pathway',
     desc: 'Transforming AHRI certification into the recognised, market-mandated professional standard for HR in Australia, analogous to CPA for accounting.',
     subSors: [
-      'CPA/AICD Equivalence — From Aspirational to Market-Mandated Standard',
-      'Is Certification the Right Long-Term Centrepiece?',
-      'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based',
+      'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard',
+      'Certification as Long-Term Centrepiece',
       'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism',
-      'University Integration & Career Pipeline: The Certification On-Ramp'
+      'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based',
+      'University Integration & Career Pipeline — The Certification On-Ramp'
     ]
   },
   {
     id: 3,
-    title: 'AI & Workforce Transformation',
+    title: 'AI and Workforce Transformation',
     desc: 'Positioning the HR profession as the essential lead function for responsible, human-centred AI deployment, and AHRI as the authoritative voice on the people dimension of AI transformation.',
     subSors: [
       'Trusted AI Advisor & Closing the HR Credibility Gap on AI',
-      'Human-AI Hybrid Workforce Governance: Designing for Mixed Human-Machine Teams',
+      'Human-AI Hybrid Workforce Governance. Designing for Mixed Human-Machine Teams',
       'Ethical AI in People Decisions & Building the Governance Framework',
-      'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension',
-      'Australia\'s Technology Lag: Leading From Behind in a Fast-Moving Global Context'
+      'AI as Psychosocial Hazard & Managing the Wellbeing-Automation',
+      'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context',
+      'Agentic HR Value-Add Elevator of Practice and Potential Professional Displacement'
     ]
   },
   {
     id: 4,
-    title: 'Advocacy & Strategic Voice',
+    title: 'Advocacy and Strategic Voice',
     desc: 'Asserting AHRI as the definitive expert voice on the future of work in Australia — providing trusted policy guidance and becoming the go-to reference for government, media, and business.',
     subSors: [
       'Government\'s Go-To Advisor: Filling the Policy Vacuum',
-      'Regulatory Translation Service: From Compliance to Trusted Rapid-Response',
-      'Research & Thought Leadership: From Under-Promoted Asset to National Intelligence Source',
-      'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership'
+      'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response',
+      'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source',
+      'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership',
+      'Visibility Amplification — Leveraging Existing Value to Build National Influence'
     ]
   },
   {
@@ -613,13 +638,15 @@ const esors = [
   },
   {
     id: 6,
-    title: 'Membership & Member Economics',
+    title: 'Membership and Member Economics',
     desc: 'Redesigning the membership model — from annual fee to a flexible, guild-based ecosystem serving the full 200,000+ HR profession at different tiers of engagement.',
     subSors: [
-      'Visibility Amplification: Leveraging Existing Value to Build National Influence',
-      'Guild Model Transformation: From 17,000 to 200,000+ Professional Home',
-      'Hyper-Personalisation: From One-Size-Fits-All to Contextually Relevant',
-      'Volunteer Workforce Redesign: From Event Burden to Meaningful Contribution'
+      'C-Suite Engagement as the Membership Force Multiplier',
+      'Guild Model Transformation: From 17,000 Members to 100,000+ Professional Home',
+      'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant',
+      'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution',
+      'Events as Key Components of Community and Connection',
+      'Communities of Practice for Relationship with Like-Minded / Like-Focussed Professionals'
     ]
   }
 ];
@@ -699,8 +726,8 @@ const questions = [
 
 const STORAGE_KEY = 'ahri_sor_v2';
 const answers = {};
-let current = 0; // 0 = contact form, 1-6 = E-SOR pages
-const TOTAL_PAGES = 1 + esors.length; // contact + 6 E-SORs
+let current = 0; // 0 = contact form, 1-6 = Primary SOR pages
+const TOTAL_PAGES = 1 + esors.length; // contact + 6 Primary SORs
 
 function saveProgress() {
   try {
@@ -734,7 +761,7 @@ function render() {
   // Progress bar
   document.getElementById('progress-bar').style.width = (current / (TOTAL_PAGES - 1) * 100) + '%';
 
-  // Step dots: first dot = contact, rest = E-SORs
+  // Step dots: first dot = contact, rest = Primary SORs
   document.getElementById('step-dots').innerHTML =
     Array.from({ length: TOTAL_PAGES }, (_, i) =>
       `<div class="step-dot ${i < current ? 'done' : i === current ? 'active' : ''}"></div>`
@@ -764,10 +791,10 @@ function renderEsor(idx) {
   document.getElementById('survey-page').style.display  = 'block';
 
   const esor = esors[idx];
-  document.getElementById('header-sub').textContent = 'Rate each sub-SOR across 14 criteria · 1 (low) to 7 (high)';
-  document.getElementById('step-count').textContent = `E-SOR ${idx + 1} of ${esors.length}`;
+  document.getElementById('header-sub').textContent = 'Rate each sub-SOR across 14 criteria. The drop-down arrows provide detail on each. Note that the scale of impact is not automatically 1 = low / 7 = high — please read each criterion carefully.';
+  document.getElementById('step-count').textContent = `Primary SOR ${idx + 1} of ${esors.length}`;
 
-  document.getElementById('esor-badge').textContent = `E-SOR ${esor.id}`;
+  document.getElementById('esor-badge').textContent = `Primary SOR ${esor.id}`;
   document.getElementById('esor-title').textContent = esor.title;
   document.getElementById('esor-desc').textContent  = esor.desc;
 
@@ -804,7 +831,7 @@ function renderEsor(idx) {
     nextBtn.textContent = 'Submit Survey →';
     nextBtn.onclick = submitSurvey;
   } else {
-    nextBtn.textContent = 'Next E-SOR →';
+    nextBtn.textContent = 'Next Primary SOR →';
     nextBtn.onclick = function() { navigate(1); };
   }
 }

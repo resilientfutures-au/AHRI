@@ -11,7 +11,7 @@
 //   • Responses    Raw response data (one row per respondent)
 //   • Summary      Average score per sub-SOR per criterion
 //   • Ranking      All 27 sub-SORs ranked by average total score
-//   • By E-SOR     Aggregated scores at E-SOR level (6 E-SORs)
+//   • By Primary SOR     Aggregated scores at Primary SOR level (6 Primary SORs)
 //   • Dashboard    High-level metrics, top picks, leaderboard
 //
 // MAINTENANCE:
@@ -24,7 +24,7 @@
 var RESPONSES_SHEET = 'Responses';
 var SUMMARY_SHEET   = 'Summary';
 var RANKING_SHEET   = 'Ranking';
-var ESOR_SHEET      = 'By E-SOR';
+var ESOR_SHEET      = 'By Primary SOR';
 var DASHBOARD_SHEET = 'Dashboard';
 var TIMEZONE        = 'Australia/Melbourne';
 
@@ -45,36 +45,39 @@ var ESORS = [
       { idx: 1, label: 'The Foundational Identity Choice' },
       { idx: 2, label: 'Beyond HR: Redefining the Professional Boundary' },
       { idx: 3, label: 'Whole-System Workforce Leadership > Filling the National Vacuum' },
-      { idx: 4, label: 'Brand & Identity Evolution > From \'Human Resources\' to Contemporary Professional Home' }
+      { idx: 4, label: 'Brand & Identity Evolution > From \'Human Resources\' Institute to Contemporary Professional Home' },
+      { idx: 5, label: 'Strategic Letting Go > What AHRI Must Stop Doing' }
     ]
   },
   {
     id: 2, title: 'Certification and Professional Pathway',
     subSors: [
-      { idx: 1, label: 'CPA/AICD Equivalence — From Aspirational to Market-Mandated Standard' },
-      { idx: 2, label: 'Is Certification the Right Long-Term Centrepiece?' },
-      { idx: 3, label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based' },
-      { idx: 4, label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism' },
-      { idx: 5, label: 'University Integration & Career Pipeline: The Certification On-Ramp' }
+      { idx: 1, label: 'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard' },
+      { idx: 2, label: 'Certification as Long-Term Centrepiece' },
+      { idx: 3, label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism' },
+      { idx: 4, label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based' },
+      { idx: 5, label: 'University Integration & Career Pipeline — The Certification On-Ramp' }
     ]
   },
   {
     id: 3, title: 'AI and Workforce Transformation',
     subSors: [
       { idx: 1, label: 'Trusted AI Advisor & Closing the HR Credibility Gap on AI' },
-      { idx: 2, label: 'Human-AI Hybrid Workforce Governance: Designing for Mixed Human-Machine Teams' },
+      { idx: 2, label: 'Human-AI Hybrid Workforce Governance. Designing for Mixed Human-Machine Teams' },
       { idx: 3, label: 'Ethical AI in People Decisions & Building the Governance Framework' },
-      { idx: 4, label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension' },
-      { idx: 5, label: 'Australia\'s Technology Lag: Leading From Behind in a Fast-Moving Global Context' }
+      { idx: 4, label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation' },
+      { idx: 5, label: 'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context' },
+      { idx: 6, label: 'Agentic HR Value-Add Elevator of Practice and Potential Professional Displacement' }
     ]
   },
   {
     id: 4, title: 'Advocacy and Strategic Voice',
     subSors: [
       { idx: 1, label: 'Government\'s Go-To Advisor: Filling the Policy Vacuum' },
-      { idx: 2, label: 'Regulatory Translation Service: From Compliance to Trusted Rapid-Response' },
-      { idx: 3, label: 'Research & Thought Leadership: From Under-Promoted Asset to National Intelligence Source' },
-      { idx: 4, label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership' }
+      { idx: 2, label: 'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response' },
+      { idx: 3, label: 'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source' },
+      { idx: 4, label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership' },
+      { idx: 5, label: 'Visibility Amplification — Leveraging Existing Value to Build National Influence' }
     ]
   },
   {
@@ -88,12 +91,14 @@ var ESORS = [
     ]
   },
   {
-    id: 6, title: 'Membership & Member Economics',
+    id: 6, title: 'Membership and Member Economics',
     subSors: [
-      { idx: 1, label: 'Visibility Amplification: Leveraging Existing Value to Build National Influence' },
-      { idx: 2, label: 'Guild Model Transformation: From 17,000 to 200,000+ Professional Home' },
-      { idx: 3, label: 'Hyper-Personalisation: From One-Size-Fits-All to Contextually Relevant' },
-      { idx: 4, label: 'Volunteer Workforce Redesign: From Event Burden to Meaningful Contribution' }
+      { idx: 1, label: 'C-Suite Engagement as the Membership Force Multiplier' },
+      { idx: 2, label: 'Guild Model Transformation: From 17,000 Members to 100,000+ Professional Home' },
+      { idx: 3, label: 'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant' },
+      { idx: 4, label: 'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution' },
+      { idx: 5, label: 'Events as Key Components of Community and Connection' },
+      { idx: 6, label: 'Communities of Practice for Relationship with Like-Minded / Like-Focussed Professionals' }
     ]
   }
 ];
@@ -178,13 +183,13 @@ function responseHeaders() {
   ESORS.forEach(function(esor) {
     esor.subSors.forEach(function(ss) {
       QUESTIONS.forEach(function(q) {
-        headers.push('E-SOR ' + esor.id + ' · SS' + ss.idx + ' · Q' + q.id + ': ' + q.label);
+        headers.push('Primary SOR ' + esor.id + ' · SS' + ss.idx + ' · Q' + q.id + ': ' + q.label);
       });
     });
   });
   ESORS.forEach(function(esor) {
     esor.subSors.forEach(function(ss) {
-      headers.push('E-SOR ' + esor.id + ' SS' + ss.idx + ' Total (/98)');
+      headers.push('Primary SOR ' + esor.id + ' SS' + ss.idx + ' Total (/98)');
     });
   });
   return headers;
@@ -279,9 +284,9 @@ function setupSummarySheet(ss) {
        .setFontWeight('bold').setFontSize(13).setHorizontalAlignment('left');
   sheet.setRowHeight(1, 36);
 
-  // E-SOR band row
+  // Primary SOR band row
   var row2 = [''];
-  flat.forEach(function(item) { row2.push('E-SOR ' + item.esor.id + ': ' + item.esor.title); });
+  flat.forEach(function(item) { row2.push('Primary SOR ' + item.esor.id + ': ' + item.esor.title); });
   row2.push('');
   sheet.getRange(2, 1, 1, row2.length).setValues([row2]);
   sheet.setRowHeight(2, 32);
@@ -403,7 +408,7 @@ function setupRankingSheet(ss) {
   sheet.getRange(2, 1, 1, 6).merge().setFontStyle('italic').setFontColor('#666');
   sheet.setRowHeight(2, 22);
 
-  var headers = ['Rank', 'E-SOR', 'Sub-SOR', 'Avg Total /98', 'Avg per Criterion', 'Respondents'];
+  var headers = ['Rank', 'Primary SOR', 'Sub-SOR', 'Avg Total /98', 'Avg per Criterion', 'Respondents'];
   sheet.getRange(3, 1, 1, headers.length).setValues([headers]);
   sheet.getRange(3, 1, 1, headers.length)
        .setBackground(C_INK_HEADER).setFontColor('#ffffff')
@@ -418,7 +423,7 @@ function setupRankingSheet(ss) {
     var row     = 4 + i;
 
     sheet.getRange(row, 1).setFormula('=IFERROR(RANK(D' + row + ',D$4:D$' + (3 + flat.length) + ',0),"")');
-    sheet.getRange(row, 2).setValue('E-SOR ' + item.esor.id + ': ' + item.esor.title);
+    sheet.getRange(row, 2).setValue('Primary SOR ' + item.esor.id + ': ' + item.esor.title);
     sheet.getRange(row, 3).setValue(item.subSor.label);
     sheet.getRange(row, 4).setFormula('=IFERROR(' + avgCell + ',"")');
     sheet.getRange(row, 5).setFormula('=IFERROR(D' + row + '/14,"")');
@@ -457,7 +462,7 @@ function setupRankingSheet(ss) {
   Logger.log('Ranking sheet configured.');
 }
 
-// ── BY E-SOR SHEET (aggregated at E-SOR level) ──────────────────────────────
+// ── BY Primary SOR SHEET (aggregated at Primary SOR level) ──────────────────────────────
 
 function setupEsorRollupSheet(ss) {
   var sheet = ss.getSheetByName(ESOR_SHEET);
@@ -467,14 +472,14 @@ function setupEsorRollupSheet(ss) {
   var refR = "'" + RESPONSES_SHEET + "'";
 
   // Title row (not merged — would conflict with frozen column 1)
-  sheet.getRange(1, 1).setValue('By E-SOR — Average score per E-SOR per criterion (across all sub-SORs)');
+  sheet.getRange(1, 1).setValue('By Primary SOR — Average score per Primary SOR per criterion (across all sub-SORs)');
   sheet.getRange(1, 1, 1, ESORS.length + 2)
        .setBackground(C_GOLD).setFontColor('#ffffff')
        .setFontWeight('bold').setFontSize(13);
   sheet.setRowHeight(1, 36);
 
   var row2 = ['Criterion'];
-  ESORS.forEach(function(esor) { row2.push('E-SOR ' + esor.id + ': ' + esor.title); });
+  ESORS.forEach(function(esor) { row2.push('Primary SOR ' + esor.id + ': ' + esor.title); });
   row2.push('Overall');
   sheet.getRange(2, 1, 1, row2.length).setValues([row2]);
   sheet.setRowHeight(2, 60);
@@ -546,7 +551,7 @@ function setupEsorRollupSheet(ss) {
   sheet.setFrozenRows(2);
   sheet.setFrozenColumns(1);
 
-  Logger.log('By E-SOR sheet configured.');
+  Logger.log('By Primary SOR sheet configured.');
 }
 
 // ── DASHBOARD SHEET (high-level overview) ────────────────────────────────────
@@ -577,7 +582,7 @@ function setupDashboardSheet(ss) {
     { label: 'Respondents',          formula: '=IFERROR(COUNTA(' + refR + '!A2:A),0)' },
     { label: 'Sub-SORs assessed',    formula: '=27' },
     { label: 'Criteria per sub-SOR', formula: '=14' },
-    { label: 'Top E-SOR',            formula: '=IFERROR(INDEX(' + refE + '!B2:G2,MATCH(MAX(' + refE + '!B' + totalRow + ':G' + totalRow + '),' + refE + '!B' + totalRow + ':G' + totalRow + ',0)),"-")' },
+    { label: 'Top Primary SOR',            formula: '=IFERROR(INDEX(' + refE + '!B2:G2,MATCH(MAX(' + refE + '!B' + totalRow + ':G' + totalRow + '),' + refE + '!B' + totalRow + ':G' + totalRow + ',0)),"-")' },
     { label: 'Highest avg total',    formula: '=IFERROR(MAX(' + refK + '!D4:D30),"-")' }
   ];
 
@@ -641,20 +646,20 @@ function setupDashboardSheet(ss) {
   sheet.getRange(9, 4, 5, 1).setWrap(true).setFontSize(10);
   sheet.getRange(9, 5, 5, 1).setHorizontalAlignment('center').setNumberFormat('0.0').setFontWeight('bold');
 
-  // E-SOR leaderboard
-  sheet.getRange(15, 1).setValue('E-SOR LEADERBOARD');
+  // Primary SOR leaderboard
+  sheet.getRange(15, 1).setValue('Primary SOR LEADERBOARD');
   sheet.getRange(15, 1, 1, 5).merge()
        .setBackground(C_INK).setFontColor('#ffffff')
        .setFontWeight('bold').setFontSize(11);
 
-  sheet.getRange(16, 1, 1, 3).setValues([['E-SOR', 'Avg Total /98', 'Avg per Criterion']]);
+  sheet.getRange(16, 1, 1, 3).setValues([['Primary SOR', 'Avg Total /98', 'Avg per Criterion']]);
   sheet.getRange(16, 1, 1, 3).setBackground('#444').setFontColor('#fff').setFontWeight('bold');
 
   var palette = ['#fbe9e7', '#f3e5f5', '#e3f2fd', '#e8f5e9', '#fff9c4', '#fce4ec'];
   ESORS.forEach(function(esor, ei) {
     var row    = 17 + ei;
     var totRef = refE + '!' + colLetter(2 + ei) + (3 + QUESTIONS.length);
-    sheet.getRange(row, 1).setValue('E-SOR ' + esor.id + ': ' + esor.title);
+    sheet.getRange(row, 1).setValue('Primary SOR ' + esor.id + ': ' + esor.title);
     sheet.getRange(row, 1).setBackground(palette[ei]);
     sheet.getRange(row, 2).setFormula('=IFERROR(' + totRef + ',"-")');
     sheet.getRange(row, 3).setFormula('=IFERROR(B' + row + '/14,"-")');
@@ -753,7 +758,7 @@ function buildEmailHtml(name, answers) {
         '<tr>' +
           '<td style="padding:8px 0;width:32px;color:#a44f43;font-weight:700;font-size:15px;vertical-align:top;">' + (i + 1) + '</td>' +
           '<td style="padding:8px 8px;color:#1a1a1a;vertical-align:top;">' + escapeHtml(item.subSor.label) +
-            '<div style="font-size:11px;color:#888;margin-top:2px;">E-SOR ' + item.esor.id + ': ' + escapeHtml(item.esor.title) + '</div>' +
+            '<div style="font-size:11px;color:#888;margin-top:2px;">Primary SOR ' + item.esor.id + ': ' + escapeHtml(item.esor.title) + '</div>' +
           '</td>' +
           '<td style="padding:8px 0;text-align:right;font-weight:700;color:#a44f43;font-size:14px;white-space:nowrap;vertical-align:top;">' + item.total + ' / 98</td>' +
         '</tr>';
@@ -761,12 +766,12 @@ function buildEmailHtml(name, answers) {
     html += '</table></div>';
   }
 
-  // Per-E-SOR detailed breakdown
+  // Per-Primary SOR detailed breakdown
   ESORS.forEach(function(esor, ei) {
     html += '' +
       '<div style="background:#ffffff;padding:22px 24px;border:1px solid #d4d4d4;border-top:none;">' +
         '<div style="border-left:4px solid ' + palette[ei] + ';padding-left:12px;margin-bottom:18px;">' +
-          '<div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#a44f43;font-weight:600;">E-SOR ' + esor.id + '</div>' +
+          '<div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#a44f43;font-weight:600;">Primary SOR ' + esor.id + '</div>' +
           '<div style="font-size:16px;font-weight:700;color:#1a1a1a;">' + escapeHtml(esor.title) + '</div>' +
         '</div>';
 
