@@ -459,29 +459,13 @@ table.matrix {
   color: var(--ink);
   font-weight: 700;
 }
-.contact-card .overview ul.overview-notes {
-  list-style: none;
+.contact-card .overview p.overview-notes {
   margin: 18px 0 0;
   padding: 14px 0 0;
   border-top: 1px dashed var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.contact-card .overview ul.overview-notes li {
   font-size: 12.5px;
   color: var(--ink-light);
-  line-height: 1.55;
-  padding-left: 18px;
-  position: relative;
-}
-.contact-card .overview ul.overview-notes li::before {
-  content: "■";
-  position: absolute;
-  left: 0;
-  top: 1px;
-  color: var(--gold);
-  font-size: 8px;
+  line-height: 1.6;
 }
 .contact-card .overview-tip {
   margin-top: 16px;
@@ -578,12 +562,7 @@ table.matrix {
           <li><strong>14 criteria</strong> · rated 1 to 7</li>
           <li><strong>~45 minutes</strong> · progress auto-saved</li>
         </ul>
-        <ul class="overview-notes">
-          <li>All responses recorded.</li>
-          <li>Report and individual scores never shared.</li>
-          <li>Copy of who submitted responses never shared and kept confidential.</li>
-          <li>Submission for your record and to support discussion with peers.</li>
-        </ul>
+        <p class="overview-notes">All responses are recorded. Reports and individual scores are never shared. A copy of who submitted responses is never shared and kept confidential. It is your responsibility to complete your submission for your record and to support discussion with peers.</p>
         <p class="overview-tip">Tip: click the <strong>▾</strong> arrow next to any sub-SOR or criterion to reveal its full description and scoring guidance.</p>
       </div>
       <div class="field" id="field-name">
