@@ -202,7 +202,39 @@ table.matrix {
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
+  cursor: pointer;
+  user-select: none;
 }
+.sub-sor-name:hover { color: var(--gold); }
+.sub-sor-name.open {
+  max-height: none;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  display: block;
+}
+.sub-sor-chevron {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--gold-light);
+  margin-left: 3px;
+  transition: transform 0.2s ease, color 0.15s;
+}
+.sub-sor-name.open .sub-sor-chevron {
+  transform: rotate(180deg);
+  color: var(--gold);
+}
+.sub-sor-desc {
+  display: none;
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--ink-light);
+  line-height: 1.5;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+.sub-sor-desc.open { display: block; }
 
 /* Body rows — alternating shade for scannability */
 .matrix tbody tr {
@@ -578,75 +610,75 @@ const esors = [
   {
     id: 1,
     title: 'Scope of Play',
-    desc: 'Redefining the boundaries of AHRI\'s professional remit — from a narrow HR professional body to the leading authority on the modern workplace.',
+    desc: 'Broader relevance at the intersection of workforce, workplace, leadership and societal transition. Expansion without strategic clarity could diffuse identity, overextend capability and weaken core execution.',
     subSors: [
-      'The Foundational Identity Choice',
-      'Beyond HR: Redefining the Professional Boundary',
-      'Whole-System Workforce Leadership > Filling the National Vacuum',
-      'Brand & Identity Evolution > From \'Human Resources\' Institute to Contemporary Professional Home',
-      'Strategic Letting Go > What AHRI Must Stop Doing'
+      { label: 'The Foundational Identity Choice', desc: 'Remain membership body serving HR profession, or evolve into that which defines, leads and governs.' },
+      { label: 'Beyond HR: Redefining the Professional Boundary', desc: 'As the scope of HR expands AHRI redefines it. What does that then mean for the current model?' },
+      { label: 'Whole-System Workforce Leadership > Filling the National Vacuum', desc: 'Short window to fill the gap of cross-sector authoritative leadership voice.' },
+      { label: 'Brand & Identity Evolution > From \'Human Resources\' Institute to Contemporary Professional Home', desc: 'Profession is moving away from a name the org is tethered to. If the name does not align with the ambition, engagement with current and future members is at risk.' },
+      { label: 'Strategic Letting Go > What AHRI Must Stop Doing', desc: 'Releasing what does not build future capability.' }
     ]
   },
   {
     id: 2,
     title: 'Certification and Professional Pathway',
-    desc: 'Transforming AHRI certification into the recognised, market-mandated professional standard for HR in Australia, analogous to CPA for accounting.',
+    desc: 'Could become over-invested as a legacy centrepiece if conditions do not support viability. Test for marker of trust, standards and professional legitimacy vs investment in resources and focus.',
     subSors: [
-      'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard',
-      'Certification as Long-Term Centrepiece',
-      'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism',
-      'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based Assessment',
-      'University Integration & Career Pipeline — The Certification On-Ramp'
+      { label: 'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard', desc: 'Credential adoption challenged by market-led competencies.' },
+      { label: 'Certification as Long-Term Centrepiece', desc: 'Risks locking-in to certification when traditional forms of accreditation are under threat and other forms of value could be elevated.' },
+      { label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism', desc: 'CPO as a strategic role; AHRI membership seen as essential and championed by C-suite.' },
+      { label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based Assessment', desc: 'Adoption of future-fit skills and transition pathways yet to be shaped by market. Risk of continuing with approaches anchored in legacy systems.' },
+      { label: 'University Integration & Career Pipeline — The Certification On-Ramp', desc: 'Treated as quality assurance, while also an opportunity for building a pipeline of future members.' }
     ]
   },
   {
     id: 3,
     title: 'AI and Workforce Transformation',
-    desc: 'Positioning the HR profession as the essential lead function for responsible, human-centred AI deployment, and AHRI as the authoritative voice on the people dimension of AI transformation.',
+    desc: 'If approached too narrowly as "technology content", AHRI may miss the larger workforce coherence and design challenge. Positions AHRI to lead where the profession, organisations, industries and government most need guidance.',
     subSors: [
-      'Trusted AI Advisor & Closing the HR Credibility Gap on AI',
-      'Human-AI Hybrid Workforce Governance — Designing for Mixed Human-Machine Teams',
-      'Ethical AI in People Decisions & Building the Governance Framework',
-      'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension',
-      'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context',
-      'Agentic HR Value-Add Elevation of Practice and Potential Professional Displacement'
+      { label: 'Trusted AI Advisor & Closing the HR Credibility Gap on AI', desc: 'Opportunity to claim this position is narrowing, with multiple orgs launching AI-HR specialists.' },
+      { label: 'Human-AI Hybrid Workforce Governance — Designing for Mixed Human-Machine Teams', desc: 'Managing virtual AI employees alongside people will require entirely new frameworks that the profession has not yet developed.' },
+      { label: 'Ethical AI in People Decisions & Building the Governance Framework', desc: 'Ethical, legal and human-rights implications of algorithmic people decisions.' },
+      { label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension', desc: 'AI-driven workplace transformation and psychological safety is a largely unaddressed frontier.' },
+      { label: 'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context', desc: 'Time-bound opportunity for AHRI. Risk of professionals turning to international players.' },
+      { label: 'Agentic HR Value-Add Elevation of Practice and Potential Professional Displacement', desc: 'Profession\'s long-term viability is at a crossroads if authoring, designing and governing is not led by humans.' }
     ]
   },
   {
     id: 4,
     title: 'Advocacy and Strategic Voice',
-    desc: 'Asserting AHRI as the definitive expert voice on the future of work in Australia — providing trusted policy guidance and becoming the go-to reference for government, media, and business.',
+    desc: 'Elevates AHRI from commentator to consequential shaper. Requires AHRI to hold positions, invite disagreement, and operate with a higher public-risk posture than historically preferred.',
     subSors: [
-      'Government\'s Go-To Advisor: Filling the Policy Vacuum',
-      'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response Service',
-      'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source',
-      'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership',
-      'Visibility Amplification — Leveraging Existing Value to Build National Influence'
+      { label: 'Government\'s Go-To Advisor: Filling the Policy Vacuum', desc: 'Become a leading voice on national future-workforce policy across AI, climate, health and the future of work — or follow when others lead.' },
+      { label: 'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response Service', desc: 'Provide real-time, actionable insights to members as policy and regulation shift.' },
+      { label: 'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source', desc: 'Intentional elevation of research work and profile to become a trusted source of strategic intelligence for members and other stakeholders.' },
+      { label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership', desc: 'Providing values-based voice and strength in the face of rising extremism and backlash to DEI.' },
+      { label: 'Visibility Amplification — Leveraging Existing Value to Build National Influence', desc: 'Intentionally growing profile and leveraging network to influence relevant aspects of the national agenda.' }
     ]
   },
   {
     id: 5,
     title: 'Platform / Ecosystem Model',
-    desc: 'Repositioning AHRI as a curated platform — the quality-assured, trusted connector for HR professional development and services across a partner ecosystem.',
+    desc: 'Expands value, capability access and speed without building unsustainable internal fixed cost. Poor partnering design could disintermediate AHRI or weaken control of quality, trust and brand.',
     subSors: [
-      'The Apple App Store Model > From In-House Producer to Curated Ecosystem',
-      'From Defensive Insularity to Collaborative Amplification',
-      'Certification as Platform Trust Architecture',
-      'Building vs Buying vs Partnering: The Capability Acquisition Framework',
-      'Revenue Diversification Through Ecosystem Economics'
+      { label: 'The Apple App Store Model > From In-House Producer to Curated Ecosystem', desc: 'Owning the platform, setting the standards and curating access to products and services created by others.' },
+      { label: 'From Defensive Insularity to Collaborative Amplification', desc: 'Growing a network of key strategic partners — even with would-be competitors — to elevate voice and impact.' },
+      { label: 'Certification as Platform Trust Architecture', desc: 'Setting and holding platform standards so that all curated content, regardless of origin, is qualified by AHRI — enabling immediate trust across members.' },
+      { label: 'Building vs Buying vs Partnering: The Capability Acquisition Framework', desc: 'Moving beyond in-house capabilities to network capability access with clear arrangements for shared risk-reward.' },
+      { label: 'Revenue Diversification Through Ecosystem Economics', desc: 'Shared monetisation of new products and services — from full co-creation to "clipping the ticket".' }
     ]
   },
   {
     id: 6,
     title: 'Membership and Member Economics',
-    desc: 'Redesigning the membership model — from annual fee to a flexible, guild-based ecosystem serving the full 200,000+ HR profession at different tiers of engagement.',
+    desc: 'Redesigning the model could create stronger relevance across career stages and segments. If AHRI remains anchored to a traditional annual-membership logic, value sensitivity may increase faster than retention capability.',
     subSors: [
-      'C-Suite Engagement as the Membership Force Multiplier',
-      'Guild Model Transformation: From 17,000 Members to a Professional Home for 100,000+',
-      'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant',
-      'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution',
-      'Events as Key Components of Community and Connection',
-      'Communities of Practice for Relationships with Like-Minded / Like-Focussed Professionals'
+      { label: 'C-Suite Engagement as the Membership Force Multiplier', desc: 'Increasing C-level relationships to gain org-wide buy-in to membership.' },
+      { label: 'Guild Model Transformation: From 17,000 Members to a Professional Home for 100,000+', desc: 'Resetting the relationship with AHRI — from traditional membership for a subset, to full affiliation for all HR professionals.' },
+      { label: 'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant', desc: 'Towards personalised, data-driven delivery of real-time value that is unique to individual and context.' },
+      { label: 'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution', desc: 'Activating the network as the most underused (and undervalued) AHRI asset.' },
+      { label: 'Events as Key Components of Community and Connection', desc: 'Making the most of event-based connections while innovating the event model.' },
+      { label: 'Communities of Practice for Relationships with Like-Minded / Like-Focussed Professionals', desc: 'Deliberate growth in online and in-person communities aligned to existing and future HR areas of focus — including a push to future-focussed topics.' }
     ]
   }
 ];
@@ -799,7 +831,10 @@ function renderEsor(idx) {
   document.getElementById('esor-desc').textContent  = esor.desc;
 
   const subSorCols = esor.subSors.map(s =>
-    `<th class="sub-sor-th"><div class="sub-sor-name">${s}</div></th>`
+    `<th class="sub-sor-th">
+       <div class="sub-sor-name" onclick="toggleDesc(this)">${s.label} <span class="sub-sor-chevron">&#9662;</span></div>
+       <div class="sub-sor-desc">${s.desc}</div>
+     </th>`
   ).join('');
   document.getElementById('matrix-head').innerHTML =
     `<tr><th class="crit-head">Criterion</th>${subSorCols}</tr>`;
@@ -838,7 +873,10 @@ function renderEsor(idx) {
 
 function toggleDesc(nameEl) {
   nameEl.classList.toggle('open');
-  nameEl.closest('.q-cell').querySelector('.q-desc').classList.toggle('open');
+  var parent = nameEl.closest('.q-cell, .sub-sor-th');
+  if (!parent) return;
+  var desc = parent.querySelector('.q-desc, .sub-sor-desc');
+  if (desc) desc.classList.toggle('open');
 }
 
 function rate(key, val, btn) {
