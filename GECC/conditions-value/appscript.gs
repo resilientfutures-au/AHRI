@@ -37,9 +37,9 @@ var BY_LENS_SHEET   = 'By Lens';
 var BY_THEME_SHEET  = 'By Theme';
 var TIMEZONE        = 'Australia/Melbourne';
 
-// Brand colours — Glen Eira civic green palette
-var C_GREEN       = '#1e5f3f';
-var C_GREEN_LT    = '#e3efe8';
+// Brand colours — Resilient Futures palette (matches AHRI / ACO sheets)
+var C_GREEN       = '#a44f43';   // (kept as var name C_GREEN for code reach; value is RF terracotta)
+var C_GREEN_LT    = '#f5e0dd';
 var C_INK         = '#1a1a1a';
 var C_INK_HEADER  = '#2d2d2d';
 var C_GREY_ROW    = '#fafafa';
