@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glen Eira City Council — Conditions and Value Capture Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #3d3d3d;
+    --cream: #ffffff;
+    --gold: #1e5f3f;
+    --gold-light: #2d8a5e;
+    --accent: #1e5f3f;
+    --border: #d4d4d4;
+    --selected-bg: #1a1a1a;
+    --selected-text: #ffffff;
+    --progress-fill: #1e5f3f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 100;
+  }
+  #progress-bar {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* ── LAYOUT ── */
+  .survey-shell {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding-top: 20px;
+  }
+  .org-wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .org-wordmark .mark-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+  .org-wordmark .mark-sub {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-weight: 500;
+  }
+  .org-accent-line {
+    width: 36px;
+    height: 3px;
+    background: var(--gold);
+    margin-top: 4px;
+  }
+
+  /* ── HEADER ── */
+  .survey-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+    margin-bottom: 56px;
+  }
+  .survey-header .org-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .survey-header h1 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .survey-header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .survey-header .intro-text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-light);
+    max-width: 600px;
+    margin-bottom: 16px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .meta-item {
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .meta-item svg { flex-shrink: 0; }
+
+  /* ── RESUME BANNER ── */
+  #resume-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #eef5f1;
+    border: 1px solid #c5dccd;
+    border-left: 3px solid var(--gold);
+    padding: 12px 18px;
+    margin-bottom: 32px;
+    border-radius: 0 2px 2px 0;
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  #resume-banner .resume-time { font-weight: 600; color: var(--ink); }
+  #resume-banner button {
+    background: none;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  /* ── ROLE / TENURE BLOCK ── */
+  .role-block {
+    margin-bottom: 36px;
+  }
+  .role-block label.field-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 14px;
+  }
+  .role-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .role-btn {
+    padding: 9px 20px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--ink-light);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .role-btn:hover { border-color: var(--gold); color: var(--ink); }
+  .role-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  /* ── SECTION ── */
+  .section-block {
+    margin-bottom: 64px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section-block.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-letter {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 400;
+  }
+  .section-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── QUESTION ── */
+  .question-item {
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+  .question-item:last-child {
+    border-bottom: none;
+  }
+  .q-number {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .q-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .q-hint {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── TEXTAREA / OPEN TEXT ── */
+  .comment-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+  }
+  .comment-area, .open-text-area {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    padding: 14px 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+    min-height: 100px;
+  }
+  .comment-area:focus, .open-text-area:focus { border-color: var(--gold); }
+
+  .semicolon-hint {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    border-radius: 0 2px 2px 0;
+  }
+  .info-box h3 {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .info-box p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+  .info-box p:last-child { margin-bottom: 0; }
+
+  /* ── LENSES GRID ── */
+  .lenses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px 24px;
+    margin-bottom: 16px;
+  }
+  .lens-item {
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .lens-item .num {
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 20px;
+    font-size: 13px;
+  }
+
+  /* ── SUBMIT ── */
+  .submit-zone {
+    text-align: center;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 44px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { background: var(--gold); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .validation-msg {
+    display: none;
+    color: var(--gold);
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 80px 20px;
+  }
+  .success-screen .check {
+    width: 56px;
+    height: 56px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .success-screen h2 {
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .success-screen p {
+    color: var(--ink-light);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .unanswered {
+    background: #fff5f5;
+    border-radius: 4px;
+    padding: 12px;
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  @media (max-width: 540px) {
+    .survey-shell { padding: 40px 20px 80px; }
+    .role-options { gap: 8px; }
+    .role-btn { font-size: 13px; padding: 8px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div class="survey-shell">
+
+  <!-- WORDMARK -->
+  <div class="header-top">
+    <div class="org-wordmark">
+      <span class="mark-name">Glen Eira City Council</span>
+      <span class="mark-sub">Strategy Discovery</span>
+      <span class="org-accent-line"></span>
+    </div>
+  </div>
+
+  <div class="survey-header">
+    <span class="org-label">Glen Eira City Council · Strategy Discovery Baseline</span>
+    <h1>Conditions and <em>Value Capture</em> Survey</h1>
+    <p class="intro-text">As you are aware, Glen Eira City Council is commencing a strategic planning process to consider how the organisation should evolve over the coming decade.</p>
+    <p class="intro-text">As part of this process, we are capturing <strong>baseline insights</strong> from across the organisation to understand: <strong>conditions shaping the environment</strong> in which Council operates, <strong>value currently delivered to residents and community</strong>, and expectations of future value from our community.</p>
+    <p class="intro-text">There are <strong>no right or wrong answers</strong> – please take a broad view. Your perspective will help build a richer understanding of the context Council is navigating.</p>
+
+    <div class="meta-row">
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        20–30 minutes
+      </span>
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Councillors · Executive · Staff · Community
+      </span>
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Anonymous
+      </span>
+    </div>
+  </div>
+
+  <!-- RESUME BANNER -->
+  <div id="resume-banner">
+    <span class="resume-time"></span>
+    <button onclick="clearProgress()">Clear saved progress</button>
+  </div>
+
+  <!-- SECTION 1: RESPONDENT CONTEXT -->
+  <div class="section-block visible" id="section-1">
+    <div class="section-header">
+      <span class="section-letter">1</span>
+      <span class="section-title">About You</span>
+    </div>
+
+  <div class="role-block" id="role-block">
+    <label class="field-label">1. Which of the following best describes your role? <span style="color:var(--gold);">*</span></label>
+    <div class="role-options">
+      <button type="button" class="role-btn" data-role="councillor" onclick="selectRole(this)">Councillor</button>
+      <button type="button" class="role-btn" data-role="ceo_executive" onclick="selectRole(this)">CEO / Executive</button>
+      <button type="button" class="role-btn" data-role="manager" onclick="selectRole(this)">Manager</button>
+      <button type="button" class="role-btn" data-role="staff" onclick="selectRole(this)">Staff</button>
+      <button type="button" class="role-btn" data-role="community" onclick="selectRole(this)">Community Member / Volunteer</button>
+      <button type="button" class="role-btn" data-role="other" onclick="selectRole(this)">Other</button>
+    </div>
+  </div>
+
+  <div class="role-block" id="tenure-block">
+    <label class="field-label">2. How long have you been associated with Glen Eira City Council? <span style="color:var(--gold);">*</span></label>
+    <div class="role-options">
+      <button type="button" class="role-btn tenure-btn" data-tenure="lt1" onclick="selectTenure(this)">Less than 1 year</button>
+      <button type="button" class="role-btn tenure-btn" data-tenure="1-3" onclick="selectTenure(this)">1–3 years</button>
+      <button type="button" class="role-btn tenure-btn" data-tenure="3-7" onclick="selectTenure(this)">3–7 years</button>
+      <button type="button" class="role-btn tenure-btn" data-tenure="7+" onclick="selectTenure(this)">7+ years</button>
+    </div>
+  </div>
+  </div><!-- end section-1 -->
+
+  <!-- SURVEY FORM -->
+  <form id="survey-form" novalidate>
+
+    <!-- SECTION 2: VALUE DELIVERED TODAY -->
+    <div class="section-block" id="section-2">
+      <div class="section-header">
+        <span class="section-letter">2</span>
+        <span class="section-title">Value Delivered Today</span>
+      </div>
+
+      <div class="question-item" id="qi-s2q1">
+        <span class="q-number">SECTION 2 · Q1</span>
+        <p class="q-text">What are the primary forms of value that Glen Eira City Council delivers to residents and community?</p>
+        <p class="q-hint">(Note: If relevant, you may also comment on value delivered to ratepayers, local businesses, partners or other key stakeholders.)</p>
+        <textarea class="open-text-area" id="s2q1" rows="4" data-field="s2q1" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+
+      <div class="question-item" id="qi-s2q2">
+        <span class="q-number">SECTION 2 · Q2</span>
+        <p class="q-text">Where could the value Council delivers to residents and community be stronger or more relevant?</p>
+        <textarea class="open-text-area" id="s2q2" rows="4" data-field="s2q2" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 3: FUTURE VALUE EXPECTATIONS -->
+    <div class="section-block" id="section-3">
+      <div class="section-header">
+        <span class="section-letter">3</span>
+        <span class="section-title">Future Value Expectations</span>
+      </div>
+
+      <div class="question-item" id="qi-s3q1">
+        <span class="q-number">SECTION 3 · Q1</span>
+        <p class="q-text">Looking ahead 5–10 years, what forms of value will residents and community most expect from Glen Eira City Council?</p>
+        <textarea class="open-text-area" id="s3q1" rows="4" data-field="s3q1" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+
+      <div class="question-item" id="qi-s3q2">
+        <span class="q-number">SECTION 3 · Q2</span>
+        <p class="q-text">Where do you believe the expectations of residents and community of Council may be changing or evolving?</p>
+        <textarea class="open-text-area" id="s3q2" rows="4" data-field="s3q2" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 4: IMMEDIATE CONDITIONS -->
+    <div class="section-block" id="section-4">
+      <div class="section-header">
+        <span class="section-letter">4</span>
+        <span class="section-title">Immediate Conditions</span>
+      </div>
+
+      <div class="info-box">
+        <h3>12 Lenses of Change Drivers</h3>
+        <p>Thinking about <strong>conditions currently impacting Glen Eira City Council and the community it serves</strong>, please consider the 'strategic weather' across each of the following lenses.</p>
+        <div class="lenses-grid" style="margin-top: 16px;">
+          <div class="lens-item"><span class="num">1.</span><span>Planet Reliability</span></div>
+          <div class="lens-item"><span class="num">2.</span><span>Future of Work</span></div>
+          <div class="lens-item"><span class="num">3.</span><span>Technology Alternative to Human Work &amp; Systems</span></div>
+          <div class="lens-item"><span class="num">4.</span><span>Governance &amp; Institutional Trust</span></div>
+          <div class="lens-item"><span class="num">5.</span><span>Healthy Humans</span></div>
+          <div class="lens-item"><span class="num">6.</span><span>Sustainable Social &amp; Economic Growth</span></div>
+          <div class="lens-item"><span class="num">7.</span><span>Energy Systems &amp; Transition</span></div>
+          <div class="lens-item"><span class="num">8.</span><span>Social Orientation &amp; Societal Expectations</span></div>
+          <div class="lens-item"><span class="num">9.</span><span>Infrastructure Transformation</span></div>
+          <div class="lens-item"><span class="num">10.</span><span>Food &amp; Water Security</span></div>
+          <div class="lens-item"><span class="num">11.</span><span>Geopolitical</span></div>
+          <div class="lens-item"><span class="num">12.</span><span>Wildcards &amp; Unexpected Disruptions</span></div>
+        </div>
+      </div>
+
+      <div class="question-item" id="qi-s4q1">
+        <span class="q-number">LENS 1 · PLANET RELIABILITY</span>
+        <p class="q-text">What are the <strong>Planet Reliability</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Increased heatwaves and flood events affecting residents and Council assets; tightening environmental and biodiversity obligations; urban tree canopy decline)</p>
+        <textarea class="open-text-area" id="s4q1" rows="3" data-field="s4q1" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q2">
+        <span class="q-number">LENS 2 · FUTURE OF WORK</span>
+        <p class="q-text">What are the <strong>Future of Work</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Hybrid models reshaping Council workplaces and activity centres; skills shortages in critical Council functions; changing volunteer participation patterns)</p>
+        <textarea class="open-text-area" id="s4q2" rows="3" data-field="s4q2" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q3">
+        <span class="q-number">LENS 3 · TECHNOLOGY ALTERNATIVE TO HUMAN WORK &amp; SYSTEMS</span>
+        <p class="q-text">What are the <strong>Technology Alternative to Human Work &amp; Systems</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: AI transforming Council service delivery and customer interactions; automation of administrative functions; cyber-security and data privacy risks)</p>
+        <textarea class="open-text-area" id="s4q3" rows="3" data-field="s4q3" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q4">
+        <span class="q-number">LENS 4 · GOVERNANCE &amp; INSTITUTIONAL TRUST</span>
+        <p class="q-text">What are the <strong>Governance &amp; Institutional Trust</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Declining trust in local government; rising community expectations for transparency and engagement; State Government reform agenda affecting council operations)</p>
+        <textarea class="open-text-area" id="s4q4" rows="3" data-field="s4q4" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q5">
+        <span class="q-number">LENS 5 · HEALTHY HUMANS</span>
+        <p class="q-text">What are the <strong>Healthy Humans</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Mental health and social isolation rising in the community; ageing population reshaping demand for services; increasing demand for accessible parks, sport and active spaces)</p>
+        <textarea class="open-text-area" id="s4q5" rows="3" data-field="s4q5" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q6">
+        <span class="q-number">LENS 6 · SUSTAINABLE SOCIAL &amp; ECONOMIC GROWTH</span>
+        <p class="q-text">What are the <strong>Sustainable Social &amp; Economic Growth</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Cost of living pressures on residents; housing affordability and supply; vitality of local activity centres and small business)</p>
+        <textarea class="open-text-area" id="s4q6" rows="3" data-field="s4q6" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q7">
+        <span class="q-number">LENS 7 · ENERGY SYSTEMS &amp; TRANSITION</span>
+        <p class="q-text">What are the <strong>Energy Systems &amp; Transition</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Electrification of Council fleet and buildings; community solar and energy resilience; net-zero pathways and embodied carbon in capital works)</p>
+        <textarea class="open-text-area" id="s4q7" rows="3" data-field="s4q7" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q8">
+        <span class="q-number">LENS 8 · SOCIAL ORIENTATION &amp; SOCIETAL EXPECTATIONS</span>
+        <p class="q-text">What are the <strong>Social Orientation &amp; Societal Expectations</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Increasing diversity of the Glen Eira community; evolving expectations around inclusion, equity and reconciliation; shifts in how community wants to engage with Council)</p>
+        <textarea class="open-text-area" id="s4q8" rows="3" data-field="s4q8" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q9">
+        <span class="q-number">LENS 9 · INFRASTRUCTURE TRANSFORMATION</span>
+        <p class="q-text">What are the <strong>Infrastructure Transformation</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Population growth and densification pressures on roads, drainage and open space; Suburban Rail Loop and transport changes; ageing community facilities and asset renewal backlogs)</p>
+        <textarea class="open-text-area" id="s4q9" rows="3" data-field="s4q9" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q10">
+        <span class="q-number">LENS 10 · FOOD &amp; WATER SECURITY</span>
+        <p class="q-text">What are the <strong>Food &amp; Water Security</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Drought and stormwater pressures on parks and green spaces; food insecurity in vulnerable parts of the community; opportunity for urban agriculture and community gardens)</p>
+        <textarea class="open-text-area" id="s4q10" rows="3" data-field="s4q10" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q11">
+        <span class="q-number">LENS 11 · GEOPOLITICAL</span>
+        <p class="q-text">What are the <strong>Geopolitical</strong> conditions that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Global instability shaping local community cohesion; migration patterns reshaping Glen Eira's demographics; supply chain pressures on capital programs)</p>
+        <textarea class="open-text-area" id="s4q11" rows="3" data-field="s4q11" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s4q12">
+        <span class="q-number">LENS 12 · WILDCARDS &amp; UNEXPECTED DISRUPTIONS</span>
+        <p class="q-text">What are the <strong>Wildcards &amp; Unexpected Disruptions</strong> that should be on Council's strategic radar?</p>
+        <p class="q-hint">(For example: Another pandemic; major local emergency event; sudden state or federal policy shift affecting local government funding or powers)</p>
+        <textarea class="open-text-area" id="s4q12" rows="3" data-field="s4q12" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+    </div>
+
+    <!-- SECTION 5: EMERGING CONDITIONS -->
+    <div class="section-block" id="section-5">
+      <div class="section-header">
+        <span class="section-letter">5</span>
+        <span class="section-title">Emerging Conditions</span>
+      </div>
+
+      <div class="info-box">
+        <h3>Looking Beyond the Horizon</h3>
+        <p>Now thinking about <strong>conditions that may shape the future (3–10 years)</strong> for Glen Eira City Council and the community it serves, are there any emerging signals or trends you can see across the same lenses?</p>
+        <p style="color: var(--gold); font-style: italic;">You do not need to respond against every lens – just note any emerging conditions you can see.</p>
+      </div>
+
+      <div class="question-item" id="qi-s5q1">
+        <span class="q-number">SECTION 5 · Q1</span>
+        <p class="q-text">What <strong>emerging conditions</strong> do you see across any of the 12 lenses that could shape the future for Glen Eira City Council?</p>
+        <p class="q-hint">(Please note the lens name alongside each condition where possible)</p>
+        <textarea class="open-text-area" id="s5q1" rows="5" data-field="s5q1" oninput="autoSave()" placeholder="Separate each condition with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each condition with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+    </div>
+
+    <!-- SECTION 6: OTHER CONDITIONS -->
+    <div class="section-block" id="section-6">
+      <div class="section-header">
+        <span class="section-letter">6</span>
+        <span class="section-title">Other Conditions</span>
+      </div>
+
+      <div class="question-item" id="qi-s6q1">
+        <span class="q-number">SECTION 6 · Q1</span>
+        <p class="q-text">Are there any other conditions that you believe will affect Glen Eira City Council and the community it serves over the next 5–10 years?</p>
+        <textarea class="open-text-area" id="s6q1" rows="4" data-field="s6q1" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 7: STRATEGIC OPPORTUNITY-RISK -->
+    <div class="section-block" id="section-7">
+      <div class="section-header">
+        <span class="section-letter">7</span>
+        <span class="section-title">Strategic Opportunity-Risk</span>
+      </div>
+
+      <div class="question-item" id="qi-s7q1">
+        <span class="q-number">SECTION 7 · Q1</span>
+        <p class="q-text">Given the conditions you have identified, what do you see as potential <strong>strategic opportunities</strong> for Glen Eira City Council?</p>
+        <p class="q-hint">(For example: Leverage Council's place-based role to drive climate adaptation and community wellbeing outcomes)</p>
+        <textarea class="open-text-area" id="s7q1" rows="4" data-field="s7q1" oninput="autoSave()" placeholder="Separate each item with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each item with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s7q2">
+        <span class="q-number">SECTION 7 · Q2</span>
+        <p class="q-text">Given the conditions you have identified, what do you see as potential <strong>strategic risks</strong> for Glen Eira City Council?</p>
+        <p class="q-hint">(For example: Council fails to keep pace with community expectations and loses trust with the next generation of residents)</p>
+        <textarea class="open-text-area" id="s7q2" rows="4" data-field="s7q2" oninput="autoSave()" placeholder="Separate each item with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each item with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s7q3">
+        <span class="q-number">SECTION 7 · Q3</span>
+        <p class="q-text">What capabilities will Council need to secure its ability to deliver value both now and in the future?</p>
+        <textarea class="open-text-area" id="s7q3" rows="4" data-field="s7q3" oninput="autoSave()" placeholder="Separate each item with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each item with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+
+      <div class="question-item" id="qi-s7q4">
+        <span class="q-number">SECTION 7 · Q4</span>
+        <p class="q-text">What strategic shifts will most strengthen Council's impact in the future?</p>
+        <textarea class="open-text-area" id="s7q4" rows="4" data-field="s7q4" oninput="autoSave()" placeholder="Separate each item with a semi-colon ( ; )"></textarea>
+        <p class="semicolon-hint">Separate each item with a semi-colon<span style="white-space:nowrap;">&nbsp;(&nbsp;;&nbsp;)</span></p>
+      </div>
+    </div>
+
+    <!-- SECTION 8: FINAL THOUGHTS -->
+    <div class="section-block" id="section-final">
+      <div class="section-header">
+        <span class="section-letter">8</span>
+        <span class="section-title">Final Thoughts</span>
+      </div>
+
+      <div class="question-item" id="qi-s8q1">
+        <span class="q-number">SECTION 8 · Q1</span>
+        <p class="q-text">Is there anything else you would like to share for consideration at this point in the Glen Eira City Council strategy formulation process?</p>
+        <textarea class="open-text-area" id="s8q1" rows="4" data-field="s8q1" oninput="autoSave()" placeholder="Enter your response here…"></textarea>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-zone">
+      <button type="button" class="submit-btn" onclick="submitSurvey()"><span>Submit Survey</span></button>
+      <p class="validation-msg" id="val-msg">Please select your role and tenure before submitting.</p>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="check">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Thank you for completing the survey.</h2>
+    <p>Your responses will be used anonymously to inform the strategy formulation process and upcoming strategic planning discussions at Glen Eira City Council.</p>
+  </div>
+
+</div><!-- end survey-shell -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// Glen Eira City Council – Conditions & Value Capture Survey – Client Script
+// ═══════════════════════════════════════════════════════
+
+let selectedRole = null;
+let selectedTenure = null;
+const STORAGE_KEY = 'gecc_conditions_survey_progress';
+
+// All textarea field IDs for tracking
+const textFields = [
+  's2q1','s2q2',
+  's3q1','s3q2',
+  's4q1','s4q2','s4q3','s4q4','s4q5','s4q6','s4q7','s4q8','s4q9','s4q10','s4q11','s4q12',
+  's5q1',
+  's6q1',
+  's7q1','s7q2','s7q3','s7q4',
+  's8q1'
+];
+
+// ── ROLE & TENURE SELECTION ──
+function selectRole(btn) {
+  document.querySelectorAll('.role-btn:not(.tenure-btn)').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedRole = btn.dataset.role;
+  document.getElementById('role-block')?.classList.remove('unanswered');
+  saveProgress();
+  updateProgress();
+}
+
+function selectTenure(btn) {
+  document.querySelectorAll('.tenure-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedTenure = btn.dataset.tenure;
+  document.getElementById('tenure-block')?.classList.remove('unanswered');
+  saveProgress();
+  updateProgress();
+}
+
+// ── PROGRESS BAR ──
+function updateProgress() {
+  let filled = 0;
+  let total = textFields.length + 2; // +2 for role and tenure
+  if (selectedRole) filled++;
+  if (selectedTenure) filled++;
+  textFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim().length > 0) filled++;
+  });
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+// ── AUTO-SAVE ──
+function autoSave() {
+  saveProgress();
+  updateProgress();
+}
+
+function saveProgress() {
+  const data = {
+    role: selectedRole,
+    tenure: selectedTenure,
+    fields: {},
+    savedAt: new Date().toISOString()
+  };
+  textFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) data.fields[id] = el.value;
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function restoreProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+
+    // Restore role
+    if (data.role) {
+      const roleBtn = document.querySelector(`.role-btn[data-role="${data.role}"]`);
+      if (roleBtn) { roleBtn.classList.add('active'); selectedRole = data.role; }
+    }
+
+    // Restore tenure
+    if (data.tenure) {
+      const tenureBtn = document.querySelector(`.tenure-btn[data-tenure="${data.tenure}"]`);
+      if (tenureBtn) { tenureBtn.classList.add('active'); selectedTenure = data.tenure; }
+    }
+
+    // Restore text fields
+    if (data.fields) {
+      Object.entries(data.fields).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+      });
+    }
+
+    updateProgress();
+
+    if (Object.values(data.fields || {}).some(v => v && v.trim().length > 0)) {
+      showResumeBanner(data.savedAt);
+    }
+  } catch(e) { /* ignore corrupt data */ }
+}
+
+function showResumeBanner(savedAt) {
+  const banner = document.getElementById('resume-banner');
+  if (!banner) return;
+  const d = new Date(savedAt);
+  const label = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  banner.querySelector('.resume-time').textContent = `Progress restored from ${label}`;
+  banner.style.display = 'flex';
+}
+
+function clearProgress() {
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('resume-banner').style.display = 'none';
+}
+
+// ── SUBMIT ──
+function submitSurvey() {
+  // Clear previous highlights
+  document.getElementById('role-block')?.classList.remove('unanswered');
+  document.getElementById('tenure-block')?.classList.remove('unanswered');
+
+  // Validate role & tenure
+  if (!selectedRole || !selectedTenure) {
+    if (!selectedRole) document.getElementById('role-block')?.classList.add('unanswered');
+    if (!selectedTenure) document.getElementById('tenure-block')?.classList.add('unanswered');
+    document.getElementById('val-msg').style.display = 'block';
+    document.getElementById('section-1')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  document.getElementById('val-msg').style.display = 'none';
+
+  // Collect all data
+  const result = {
+    role: selectedRole,
+    tenure: selectedTenure,
+    responses: {},
+    submittedAt: new Date().toISOString()
+  };
+  textFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) result.responses[id] = el.value || '';
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // GOOGLE SHEETS INTEGRATION PLACEHOLDER
+  // ═══════════════════════════════════════════════════════
+  //
+  // Replace the URL below with your deployed Google Apps Script Web App URL.
+  //
+  // To set up:
+  // 1. Create a new Google Sheet (e.g. "GECC Conditions & Value Responses")
+  // 2. Go to Extensions > Apps Script
+  // 3. Paste the following Apps Script code:
+  //
+  //    function doPost(e) {
+  //      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  //      var data = JSON.parse(e.postData.contents);
+  //
+  //      // Build row: timestamp, role, tenure, then each response field
+  //      var row = [
+  //        new Date(),
+  //        data.role || '',
+  //        data.tenure || '',
+  //        data.responses.s2q1 || '',
+  //        data.responses.s2q2 || '',
+  //        data.responses.s3q1 || '',
+  //        data.responses.s3q2 || '',
+  //        data.responses.s4q1 || '',
+  //        data.responses.s4q2 || '',
+  //        data.responses.s4q3 || '',
+  //        data.responses.s4q4 || '',
+  //        data.responses.s4q5 || '',
+  //        data.responses.s4q6 || '',
+  //        data.responses.s4q7 || '',
+  //        data.responses.s4q8 || '',
+  //        data.responses.s4q9 || '',
+  //        data.responses.s4q10 || '',
+  //        data.responses.s4q11 || '',
+  //        data.responses.s4q12 || '',
+  //        data.responses.s5q1 || '',
+  //        data.responses.s6q1 || '',
+  //        data.responses.s7q1 || '',
+  //        data.responses.s7q2 || '',
+  //        data.responses.s7q3 || '',
+  //        data.responses.s7q4 || '',
+  //        data.responses.s8q1 || '',
+  //        data.submittedAt || ''
+  //      ];
+  //
+  //      sheet.appendRow(row);
+  //
+  //      return ContentService
+  //        .createTextOutput(JSON.stringify({ status: 'success' }))
+  //        .setMimeType(ContentService.MimeType.JSON);
+  //    }
+  //
+  // 4. Deploy as Web App (Execute as: Me, Access: Anyone)
+  // 5. Copy the Web App URL and paste it below
+  //
+  // ═══════════════════════════════════════════════════════
+
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUfvffZhTBuwLZCafHfDE-gkaySzq3f1kh1OXiHc90e1jMeoETo0I7f7D1uJWdb9V2RA/exec';
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(result)
+  }).then(function() {
+    console.log('Survey submitted successfully.');
+  }).catch(function(err) {
+    console.error('Submission error:', err);
+  });
+
+  // Show success
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('survey-form').style.display = 'none';
+  document.getElementById('section-1').style.display = 'none';
+  document.getElementById('resume-banner').style.display = 'none';
+  document.querySelector('.survey-header').style.display = 'none';
+  document.querySelector('.header-top').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── INTERSECTION OBSERVER FOR FADE-IN ──
+function observeSections() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.section-block').forEach(el => obs.observe(el));
+}
+
+// ── INIT ──
+observeSections();
+restoreProgress();
+</script>
+</body>
+</html>
