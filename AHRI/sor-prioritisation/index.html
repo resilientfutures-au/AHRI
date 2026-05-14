@@ -225,7 +225,7 @@ table.matrix {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--border);
-  text-align: left;
+  text-align: center;
 }
 .sub-sor-desc.open { display: block; }
 
@@ -459,6 +459,30 @@ table.matrix {
   color: var(--ink);
   font-weight: 700;
 }
+.contact-card .overview ul.overview-notes {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contact-card .overview ul.overview-notes li {
+  font-size: 12.5px;
+  color: var(--ink-light);
+  line-height: 1.55;
+  padding-left: 18px;
+  position: relative;
+}
+.contact-card .overview ul.overview-notes li::before {
+  content: "■";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--gold);
+  font-size: 8px;
+}
 .contact-card .overview-tip {
   margin-top: 16px;
   padding-top: 14px;
@@ -554,6 +578,12 @@ table.matrix {
           <li><strong>14 criteria</strong> · rated 1 to 7</li>
           <li><strong>~45 minutes</strong> · progress auto-saved</li>
         </ul>
+        <ul class="overview-notes">
+          <li>All responses recorded.</li>
+          <li>Report and individual scores never shared.</li>
+          <li>Copy of who submitted responses never shared and kept confidential.</li>
+          <li>Submission for your record and to support discussion with peers.</li>
+        </ul>
         <p class="overview-tip">Tip: click the <strong>▾</strong> arrow next to any sub-SOR or criterion to reveal its full description and scoring guidance.</p>
       </div>
       <div class="field" id="field-name">
@@ -603,11 +633,11 @@ const esors = [
   {
     id: 1,
     title: 'Scope of Play',
-    desc: 'Broader relevance at the intersection of workforce, workplace, leadership and societal transition. Expansion without strategic clarity could diffuse identity, overextend capability and weaken core execution',
+    desc: 'Broader relevance at the intersection of workforce, workplace, leadership and societal transition. Expansion without strategic clarity could diffuse identity, overextend capability and weaken core execution.',
     subSors: [
-      { label: 'The Foundational Identity Choice', desc: 'Remain membership body serving HR profession, or evolves into that which defines, leads and governs' },
-      { label: 'Beyond HR: Redefining the Professional Boundary', desc: 'As the scope of HR expands AHRI redefines it. What does it then mean for the current model' },
-      { label: 'Whole-System Workforce Leadership > Filling the National Vacuum', desc: 'Short window to fill this gap of cross-sector authoritative leadership voice. Gaps' },
+      { label: 'The Foundational Identity Choice', desc: 'Remain membership body serving HR profession, or evolves into that which defines, leads and governs.' },
+      { label: 'Beyond HR: Redefining the Professional Boundary', desc: 'As the scope of HR expands AHRI redefines it. What does it then mean for the current model.' },
+      { label: 'Whole-System Workforce Leadership > Filling the National Vacuum', desc: 'Short window to fill this gap of cross-sector authoritative leadership voice. Gaps in capability and systems means starting point is now.' },
       { label: 'Brand & Identity Evolution > From \'Human Resources\' Institute to Contemporary Professional Home', desc: 'Profession is moving away from a name that org is tethered to. If name does not align with the ambition - engagement with current / future members.' },
       { label: 'Strategic Letting Go > What AHRI Must Stop Doing', desc: 'Releasing what does not build future capability. If not at risk of MAD.' }
     ]
@@ -615,38 +645,38 @@ const esors = [
   {
     id: 2,
     title: 'Certification and Professional Pathway',
-    desc: 'Could become over-invested as a legacy centrepiece if conditions do not support viability. Test for marker of trust, standards and professional legitimacy vs investment in resources and focus capability and weaken core execution',
+    desc: 'Could become over-invested as a legacy centrepiece if conditions do not support viability. Test for marker of trust, standards and professional legitimacy vs investment in resources and focus capability and weaken core execution.',
     subSors: [
-      { label: 'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard', desc: 'Credential adoption challenged by market-led competencies' },
+      { label: 'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard', desc: 'Credential adoption challenged by market-led competencies.' },
       { label: 'Certification as Long-Term Centrepiece', desc: 'Risks locking-in to certification when traditional forms of accreditation are under threat and other forms of value could be elevated.' },
-      { label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism', desc: 'CPO as a strategic role, AHRI membership seen as essential and championed by C-suite' },
-      { label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based Assessment', desc: 'Adoption of future-fit skills and transition pathways yet to be shaped by market. Risk continuing with approaches anchored in legacy systems' },
-      { label: 'University Integration & Career Pipeline — The Certification On-Ramp', desc: 'Treated as quality assurance, whilst opp. for building pipeline of future members' }
+      { label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism', desc: 'CPO as a strategic role, AHRI membership seen as essential and championed by C-suite.' },
+      { label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based Assessment', desc: 'Adoption of future-fit skills and transition pathways yet to be shaped by market. Risk continuing with approaches anchored in legacy systems.' },
+      { label: 'University Integration & Career Pipeline — The Certification On-Ramp', desc: 'Treated as quality assurance, whilst opp. for building pipeline of future members.' }
     ]
   },
   {
     id: 3,
     title: 'AI and Workforce Transformation',
-    desc: 'If approached too narrowly as "technology content", AHRI may miss the larger workforce coherence and design challenge. Positions AHRI to lead where the profession, organisations, industries and government most need guidance ansition. Expansion without strategic clarity could diffuse identity, overextend capability and weaken core execution',
+    desc: 'If approached too narrowly as "technology content", AHRI may miss the larger workforce coherence and design challenge. Positions AHRI to lead where the profession, organisations, industries and government most need guidance ansition. Expansion without strategic clarity could diffuse identity, overextend capability and weaken core execution.',
     subSors: [
       { label: 'Trusted AI Advisor & Closing the HR Credibility Gap on AI', desc: 'Opp to claim this position is narrowing, with multiple orgs lunching AI-HR specialists.' },
-      { label: 'Human-AI Hybrid Workforce Governance — Designing for Mixed Human-Machine Teams', desc: 'Managing virtual AI employees alongside people will require entirely new frameworks that the profession has not yet developed' },
-      { label: 'Ethical AI in People Decisions & Building the Governance Framework', desc: 'Ethical, legal, and human rights implications of algorithmic people decisions' },
-      { label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension', desc: 'AI-driven workplace transformation & psychological safety is a largely unaddressed frontier' },
-      { label: 'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context', desc: 'Time-bound opp. for AHRI. Risk of professionals turning to international players' },
-      { label: 'Agentic HR Value-Add Elevation of Practice and Potential Professional Displacement', desc: 'Profession\'s longterm viability at crossroads, if authoring, designing and governing is not initiated by the humans' }
+      { label: 'Human-AI Hybrid Workforce Governance — Designing for Mixed Human-Machine Teams', desc: 'Managing virtual AI employees alongside people will require entirely new frameworks that the profession has not yet developed.' },
+      { label: 'Ethical AI in People Decisions & Building the Governance Framework', desc: 'Ethical, legal, and human rights implications of algorithmic people decisions.' },
+      { label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension', desc: 'AI-driven workplace transformation & psychological safety is a largely unaddressed frontier.' },
+      { label: 'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context', desc: 'Time-bound opp. for AHRI. Risk of professionals turning to international players.' },
+      { label: 'Agentic HR Value-Add Elevation of Practice and Potential Professional Displacement', desc: 'Profession\'s longterm viability at crossroads, if authoring, designing and governing is not initiated by the humans.' }
     ]
   },
   {
     id: 4,
     title: 'Advocacy and Strategic Voice',
-    desc: 'Elevates AHRI from commentator to consequential shaper. Requires AHRI to hold positions, invite disagreement, and operate with a higher public-risk posture than historically preferred',
+    desc: 'Elevates AHRI from commentator to consequential shaper. Requires AHRI to hold positions, invite disagreement, and operate with a higher public-risk posture than historically preferred.',
     subSors: [
       { label: 'Government\'s Go-To Advisor: Filling the Policy Vacuum', desc: 'Become a leading voice on national future workforce policy in the face of AI, climate, health, future work, etc. or follow when others lead.' },
       { label: 'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response Service', desc: 'Provide real time, actionable insights to members as policy and regulation shift.' },
-      { label: 'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source', desc: 'Intentional elevation of research work and profile to become trusted source of strategic intel to members and other stakeholders' },
-      { label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership', desc: 'Providing values-based voice and strength in face of rising extremism and backlash to DEI' },
-      { label: 'Visibility Amplification — Leveraging Existing Value to Build National Influence', desc: 'Intentionally growing profile and leveraging network to influence relevant aspects of the national agenda' }
+      { label: 'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source', desc: 'Intentional elevation of research work and profile to become trusted source of strategic intel to members and other stakeholders.' },
+      { label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership', desc: 'Providing values-based voice and strength in face of rising extremism and backlash to DEI.' },
+      { label: 'Visibility Amplification — Leveraging Existing Value to Build National Influence', desc: 'Intentionally growing profile and leveraging network to influence relevant aspects of the national agenda.' }
     ]
   },
   {
@@ -654,21 +684,21 @@ const esors = [
     title: 'Platform / Ecosystem Model',
     desc: 'Expands value, capability access and speed without building unsustainable internal fixed cost. Poor partnering design could disintermediate AHRI or weaken control of quality, trust and brand.',
     subSors: [
-      { label: 'The Apple App Store Model > From In-House Producer to Curated Ecosystem', desc: 'Owning the platform, setting the standards and curating access to products and services created by others' },
-      { label: 'From Defensive Insularity to Collaborative Amplification', desc: 'Growing a network of key strategic partners, even with would-be competitors to elevate voice and impact' },
-      { label: 'Certification as Platform Trust Architecture', desc: 'Setting and holding platform standards so that all curated content, regardless of origin is qualified by AHRI enabling immediate trust across members' },
-      { label: 'Building vs Buying vs Partnering: The Capability Acquisition Framework', desc: 'Moving beyond in-house capabilities to network capability access with clear arrangements for shared risk-reward' },
-      { label: 'Revenue Diversification Through Ecosystem Economics', desc: 'Shared monetisation of new products & services from full co-creation to \'clipping the ticket\'' }
+      { label: 'The Apple App Store Model > From In-House Producer to Curated Ecosystem', desc: 'Owning the platform, setting the standards and curating access to products and services created by others.' },
+      { label: 'From Defensive Insularity to Collaborative Amplification', desc: 'Growing a network of key strategic partners, even with would-be competitors to elevate voice and impact.' },
+      { label: 'Certification as Platform Trust Architecture', desc: 'Setting and holding platform standards so that all curated content, regardless of origin is qualified by AHRI enabling immediate trust across members.' },
+      { label: 'Building vs Buying vs Partnering: The Capability Acquisition Framework', desc: 'Moving beyond in-house capabilities to network capability access with clear arrangements for shared risk-reward.' },
+      { label: 'Revenue Diversification Through Ecosystem Economics', desc: 'Shared monetisation of new products & services from full co-creation to \'clipping the ticket\'.' }
     ]
   },
   {
     id: 6,
     title: 'Membership and Member Economics',
-    desc: 'Redesigning the model could create stronger relevance across career stages and segments. If AHRI remains anchored to a traditional annual membership logic, value sensitivity may increase faster than retention capability',
+    desc: 'Redesigning the model could create stronger relevance across career stages and segments. If AHRI remains anchored to a traditional annual membership logic, value sensitivity may increase faster than retention capability.',
     subSors: [
-      { label: 'C-Suite Engagement as the Membership Force Multiplier', desc: 'Increasing C-level relationships to gain org-wide buy-in to membership' },
-      { label: 'Guild Model Transformation: From 17,000 Members to a Professional Home for 100,000+', desc: 'Resetting the relationship with AHRI from traditional membership for a subset to full affiliation for all HR professionals' },
-      { label: 'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant', desc: 'Towards personalised, data-driven delivery of real-time value that is unique to individual and context' },
+      { label: 'C-Suite Engagement as the Membership Force Multiplier', desc: 'Increasing C-level relationships to gain org-wide buy-in to membership.' },
+      { label: 'Guild Model Transformation: From 17,000 Members to a Professional Home for 100,000+', desc: 'Resetting the relationship with AHRI from traditional membership for a subset to full affiliation for all HR professionals.' },
+      { label: 'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant', desc: 'Towards personalised, data-driven delivery of real-time value that is unique to individual and context.' },
       { label: 'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution', desc: 'Activating the network as the most underused (and undervalued) AHRI asset.' },
       { label: 'Events as Key Components of Community and Connection', desc: 'Making the most of event-based connections while innovating the event model.' },
       { label: 'Communities of Practice for Relationships with Like-Minded / Like-Focussed Professionals', desc: 'Deliberate growth in online and inperson communities aligned to existing and future HR areas of focus - including push to future focussed topics.' }
@@ -683,7 +713,7 @@ const questions = [
     hint: 'Consider value exchange (delivery and capture), strategic position (Shaper vs. Enabler), and durability: is the advantage sustained or quickly eroded?'
   },
   {
-    id: 2, title: '2. Conditions Volatility', low: 'Weak / unpredictable', high: 'Strong signal',
+    id: 2, title: '2. Conditions Volatility', low: 'Weak signal / unpredictable', high: 'Strong signal / relatively stable',
     text: 'How likely is it that the pattern of conditions underpinning this SOR will shift before activation and benefits realisation?',
     hint: 'Test for patterns of both immediate and emerging conditions.'
   },
@@ -693,17 +723,17 @@ const questions = [
     hint: 'Score high if conditions are ripe now. Score low if we are ahead of the market or facing structural resistance that has not yet softened.'
   },
   {
-    id: 4, title: '4. Lag Time to Systemic Effect', low: 'Years of lag', high: 'Weeks to months',
+    id: 4, title: '4. Lag Time to Systemic Effect', low: 'Significant lag / delayed shifts', high: 'No lag / immediate shifts',
     text: 'Once activated, how quickly does this SOR produce meaningful systemic effect — a visible shift in position, behaviour, or outcomes across the value network?',
     hint: 'Some SORs start quickly but take years to register in the system. Score high if effect is rapid; score low if there is a long lag between action and visible outcome.'
   },
   {
     id: 5, title: '5. Speed of Activation', low: 'Long lead time', high: 'Move immediately',
     text: 'How quickly can we initiate this SOR and begin meaningful implementation, given our current state of readiness?',
-    hint: 'High = we can move within weeks. Low = significant setup, approvals, or capability-building required before anything real begins.'
+    hint: 'If the lead time for SOR initiation is long early resource allocation may be required to get things moving.'
   },
   {
-    id: 6, title: '6. Systemic Responses', low: 'Minimal counter-response', high: 'High exposure',
+    id: 6, title: '6. Systemic Responses', low: 'Minimal counter-response', high: 'Significant push-back',
     text: 'How much does activating this SOR expose the organisation to competitive retaliation, political resistance, or adverse systemic responses from those who stand to lose from our advantage?',
     hint: 'Higher arbitrage and higher opportunity often attract higher counter-response. Score the exposure, not just the upside.'
   },
@@ -733,9 +763,9 @@ const questions = [
     hint: 'Score high if the knowledge and organisational reflexes built during activation are portable; they inform the next move rather than becoming stranded assets.'
   },
   {
-    id: 12, title: '12. Value Network Alignment', low: 'Deep effort required', high: 'Light touch',
+    id: 12, title: '12. Value Network Alignment', low: 'Intensive and deep', high: 'Light touch',
     text: 'How would you characterise the nature and depth of effort required to bring necessary stakeholders in our value network along in support of this SOR?',
-    hint: 'Consider the quality of effort required — informing vs. genuinely changing deeply held positions. Score high if alignment effort is light and relationships are already primed.'
+    hint: 'Consider the intensity of the effort required…'
   },
   {
     id: 13, title: '13. Resource Consumption', low: 'Persistent drain', high: 'Self-sustaining',
