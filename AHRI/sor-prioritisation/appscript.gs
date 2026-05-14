@@ -10,7 +10,7 @@
 // SHEETS CREATED:
 //   • Responses    Raw response data (one row per respondent)
 //   • Summary      Average score per sub-SOR per criterion
-//   • Ranking      All 27 sub-SORs ranked by average total score
+//   • Ranking      All 32 sub-SORs ranked by average total score
 //   • By Primary SOR     Aggregated scores at Primary SOR level (6 Primary SORs)
 //   • Dashboard    High-level metrics, top picks, leaderboard
 //
@@ -55,7 +55,7 @@ var ESORS = [
       { idx: 1, label: 'CPA/AICD Equivalence — From Aspirational Credential to Market-Making Standard' },
       { idx: 2, label: 'Certification as Long-Term Centrepiece' },
       { idx: 3, label: 'Employer Mandate & C-Suite Sponsorship as the Adoption Mechanism' },
-      { idx: 4, label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based' },
+      { idx: 4, label: 'Future-Fit Skills Credential: From Topic Knowledge to Capability-Based Assessment' },
       { idx: 5, label: 'University Integration & Career Pipeline — The Certification On-Ramp' }
     ]
   },
@@ -63,18 +63,18 @@ var ESORS = [
     id: 3, title: 'AI and Workforce Transformation',
     subSors: [
       { idx: 1, label: 'Trusted AI Advisor & Closing the HR Credibility Gap on AI' },
-      { idx: 2, label: 'Human-AI Hybrid Workforce Governance. Designing for Mixed Human-Machine Teams' },
+      { idx: 2, label: 'Human-AI Hybrid Workforce Governance — Designing for Mixed Human-Machine Teams' },
       { idx: 3, label: 'Ethical AI in People Decisions & Building the Governance Framework' },
-      { idx: 4, label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation' },
+      { idx: 4, label: 'AI as Psychosocial Hazard & Managing the Wellbeing-Automation Tension' },
       { idx: 5, label: 'Australia\'s Technology Lag — Leading From Behind in a Fast-Moving Global Context' },
-      { idx: 6, label: 'Agentic HR Value-Add Elevator of Practice and Potential Professional Displacement' }
+      { idx: 6, label: 'Agentic HR Value-Add Elevation of Practice and Potential Professional Displacement' }
     ]
   },
   {
     id: 4, title: 'Advocacy and Strategic Voice',
     subSors: [
       { idx: 1, label: 'Government\'s Go-To Advisor: Filling the Policy Vacuum' },
-      { idx: 2, label: 'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response' },
+      { idx: 2, label: 'Regulatory Translation Service: From Compliance Commentary to Trusted Rapid-Response Service' },
       { idx: 3, label: 'Research & Thought Leadership — From Under-Promoted Asset to National Intelligence Source' },
       { idx: 4, label: 'Navigating Social & Political Complexity — Purpose, DEI, and Values-Based Leadership' },
       { idx: 5, label: 'Visibility Amplification — Leveraging Existing Value to Build National Influence' }
@@ -94,11 +94,11 @@ var ESORS = [
     id: 6, title: 'Membership and Member Economics',
     subSors: [
       { idx: 1, label: 'C-Suite Engagement as the Membership Force Multiplier' },
-      { idx: 2, label: 'Guild Model Transformation: From 17,000 Members to 100,000+ Professional Home' },
+      { idx: 2, label: 'Guild Model Transformation: From 17,000 Members to a Professional Home for 100,000+' },
       { idx: 3, label: 'Hyper-Personalisation — From One-Size-Fits-All to Contextually Relevant' },
       { idx: 4, label: 'Volunteer Workforce Redesign — From Event Burden to Meaningful Professional Contribution' },
       { idx: 5, label: 'Events as Key Components of Community and Connection' },
-      { idx: 6, label: 'Communities of Practice for Relationship with Like-Minded / Like-Focussed Professionals' }
+      { idx: 6, label: 'Communities of Practice for Relationships with Like-Minded / Like-Focussed Professionals' }
     ]
   }
 ];
