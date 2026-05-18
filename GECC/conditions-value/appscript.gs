@@ -49,12 +49,10 @@ var C_RED_LO      = '#f8d7da';
 
 // Role + tenure value labels (mirrors the survey HTML data-* attributes)
 var ROLE_LABELS = {
-  'councillor':    'Councillor',
-  'ceo_executive': 'CEO / Executive',
-  'manager':       'Manager',
-  'staff':         'Staff',
-  'community':     'Community Member / Volunteer',
-  'other':         'Other'
+  'senior_exec':            'Senior Executive',
+  'senior_leader':          'Senior Leader',
+  'service_stream_manager': 'Service Stream Manager',
+  'other':                  'Other'
 };
 
 var TENURE_LABELS = {
@@ -227,10 +225,10 @@ function setupDashboardSheet(ss) {
   // KPIs
   var kpis = [
     { label: 'Total respondents',           formula: '=IFERROR(COUNTA(' + refR + '!A2:A),0)' },
-    { label: 'Councillors',                 formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['councillor']    + '"),0)' },
-    { label: 'CEO / Executive',             formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['ceo_executive'] + '"),0)' },
-    { label: 'Managers + Staff',            formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['manager']       + '")+COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['staff'] + '"),0)' },
-    { label: 'Community + Other',           formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['community']     + '")+COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['other'] + '"),0)' }
+    { label: 'Senior Executive',            formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['senior_exec']            + '"),0)' },
+    { label: 'Senior Leader',               formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['senior_leader']          + '"),0)' },
+    { label: 'Service Stream Manager',      formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['service_stream_manager'] + '"),0)' },
+    { label: 'Other',                       formula: '=IFERROR(COUNTIF(' + refR + '!B2:B,"' + ROLE_LABELS['other']                  + '"),0)' }
   ];
   kpis.forEach(function(kpi, i) {
     sheet.getRange(4, 1 + i).setValue(kpi.label);
