@@ -158,6 +158,7 @@ table.matrix {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
+  table-layout: fixed;
 }
 
 /* Column headers: sub-SORs — sticky so they stay visible while scrolling criteria */
@@ -185,11 +186,10 @@ table.matrix {
   border-right: 1px solid var(--border);
 }
 .sub-sor-th {
-  padding: 14px 8px 10px;
+  padding: 14px 10px 12px;
   text-align: center;
   border-right: 1px solid var(--border);
   vertical-align: top;
-  min-width: 140px;
   width: 160px;
 }
 .sub-sor-th:last-child { border-right: none; }
@@ -198,36 +198,17 @@ table.matrix {
   font-weight: 700;
   color: var(--ink);
   line-height: 1.35;
-  min-height: 4.4em;
-  cursor: pointer;
-  user-select: none;
   display: block;
 }
-.sub-sor-name:hover { color: var(--gold); }
-.sub-sor-chevron {
-  display: inline-block;
-  font-size: 16px;
-  color: var(--gold-light);
-  margin-left: 6px;
-  vertical-align: middle;
-  transition: transform 0.2s ease, color 0.15s;
-}
-.sub-sor-name.open .sub-sor-chevron {
-  transform: rotate(180deg);
-  color: var(--gold);
-}
 .sub-sor-desc {
-  display: none;
-  font-size: 11.5px;
+  display: block;
+  font-size: 10px;
   font-weight: 400;
   color: var(--ink-light);
-  line-height: 1.6;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
+  line-height: 1.45;
+  margin-top: 6px;
   text-align: center;
 }
-.sub-sor-desc.open { display: block; }
 
 /* Body rows — alternating shade for scannability */
 .matrix tbody tr {
@@ -825,7 +806,7 @@ function renderEsor(idx) {
 
   const subSorCols = esor.subSors.map(s =>
     `<th class="sub-sor-th">
-       <div class="sub-sor-name" onclick="toggleDesc(this)">${s.label} <span class="sub-sor-chevron">&#9662;</span></div>
+       <div class="sub-sor-name">${s.label}</div>
        <div class="sub-sor-desc">${s.desc}</div>
      </th>`
   ).join('');
