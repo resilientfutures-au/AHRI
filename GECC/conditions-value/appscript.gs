@@ -66,16 +66,16 @@ var TENURE_LABELS = {
 // Each item: { id, section, label, prompt }
 var QUESTIONS = [
   // Section 2 — Value Delivered Today
-  { id: 's2q1', section: 'Value Today',          label: 'Primary forms of value to residents & community',
-    prompt: 'What are the primary forms of value that Glen Eira City Council delivers to residents and community?' },
+  { id: 's2q1', section: 'Value Today',          label: 'Primary forms of value delivered today & to whom',
+    prompt: 'What are the primary forms of value that Glen Eira delivers today and to whom?' },
   { id: 's2q2', section: 'Value Today',          label: 'Where value could be stronger / more relevant',
     prompt: 'Where could the value Council delivers be stronger or more relevant?' },
 
   // Section 3 — Future Value Expectations
-  { id: 's3q1', section: 'Future Value',         label: '5–10 yr expectations of Council',
-    prompt: 'Looking ahead 5–10 years, what forms of value will residents and community most expect from Council?' },
-  { id: 's3q2', section: 'Future Value',         label: 'How expectations are evolving',
-    prompt: 'Where do you believe community expectations of Council may be changing or evolving?' },
+  { id: 's3q1', section: 'Future Value',         label: '5–10 yr expectations of these stakeholders',
+    prompt: 'Looking ahead 5–10 years, what forms of value will these same stakeholders expect from Council?' },
+  { id: 's3q2', section: 'Future Value',         label: 'Where expectations of value may already be changing',
+    prompt: 'Where do you believe that expectations of value may already be changing or evolving?' },
 
   // Section 4 — Immediate Conditions (the 12 lenses)
   { id: 's4q1',  section: 'Immediate Lens',      label: 'Lens 1 · Planet Reliability',                            prompt: 'Planet Reliability — conditions on the strategic radar' },
@@ -99,19 +99,15 @@ var QUESTIONS = [
   { id: 's6q1',  section: 'Other',               label: 'Other conditions affecting Council over next 5–10 yrs',
     prompt: 'Are there any other conditions that you believe will affect Council and the community over the next 5–10 years?' },
 
-  // Section 7 — Strategic Opportunity-Risk
-  { id: 's7q1',  section: 'Strategic Opp-Risk',  label: 'Strategic opportunities for Council',
+  // Section 7 — Strategic Opportunity-Risk (SOR)
+  { id: 's7q1',  section: 'Strategic Opp-Risk (SOR)',  label: 'Strategic opportunities for Council',
     prompt: 'What do you see as potential strategic opportunities for Council?' },
-  { id: 's7q2',  section: 'Strategic Opp-Risk',  label: 'Strategic risks for Council',
+  { id: 's7q2',  section: 'Strategic Opp-Risk (SOR)',  label: 'Strategic risks for Council',
     prompt: 'What do you see as potential strategic risks for Council?' },
-  { id: 's7q3',  section: 'Strategic Opp-Risk',  label: 'Capabilities Council will need',
-    prompt: 'What capabilities will Council need to secure its ability to deliver value now and in the future?' },
-  { id: 's7q4',  section: 'Strategic Opp-Risk',  label: 'Strategic shifts to strengthen Council impact',
-    prompt: 'What strategic shifts will most strengthen Council\'s impact in the future?' },
 
   // Section 8 — Final Thoughts
-  { id: 's8q1',  section: 'Final Thoughts',      label: 'Anything else',
-    prompt: 'Is there anything else you would like to share for consideration?' }
+  { id: 's8q1',  section: 'Final Thoughts',      label: 'Anything else about value, conditions and SOR',
+    prompt: 'Is there anything else about value, conditions and SOR that you would like to share at this point in time?' }
 ];
 
 // Helper — convenience filters
