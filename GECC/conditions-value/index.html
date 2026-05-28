@@ -391,9 +391,111 @@
     .role-options { gap: 8px; }
     .role-btn { font-size: 13px; padding: 8px 14px; }
   }
+
+  /* ── PASSWORD GATE ── */
+  .password-gate {
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .gate-card {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 32px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+  }
+  .gate-card .org-label {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .gate-card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .gate-card p {
+    font-size: 14px;
+    color: var(--ink-light);
+    margin-bottom: 22px;
+    line-height: 1.5;
+  }
+  .gate-card input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    margin-bottom: 12px;
+    outline: none;
+  }
+  .gate-card input[type="password"]:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(164,79,67,0.15);
+  }
+  .gate-card button {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .gate-card button:hover { background: var(--gold-light); }
+  .gate-error {
+    font-size: 13px;
+    color: var(--gold);
+    min-height: 18px;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  .gate-hint {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--ink-light);
+    opacity: 0.75;
+  }
+  body.locked { overflow: hidden; }
+  body.locked .survey-shell { display: none; }
+  body.locked #progress-bar-wrap { display: none; }
 </style>
 </head>
-<body>
+<body class="locked">
+
+<!-- PASSWORD GATE -->
+<div class="password-gate" id="passwordGate">
+  <div class="gate-card">
+    <span class="org-label">Glen Eira City Council</span>
+    <h2>Access required</h2>
+    <p>This survey is for invited participants. Please enter the access password provided in your invitation to continue.</p>
+    <form id="gateForm" autocomplete="off">
+      <input type="password" id="gateInput" placeholder="Access password" aria-label="Access password" autofocus>
+      <div class="gate-error" id="gateError" role="alert"></div>
+      <button type="submit">Enter survey</button>
+    </form>
+  </div>
+</div>
 
 <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
 
@@ -734,6 +836,37 @@
 // ═══════════════════════════════════════════════════════
 // Glen Eira City Council – Conditions & Value Capture Survey – Client Script
 // ═══════════════════════════════════════════════════════
+
+// ── Password gate ──
+const SURVEY_PASSWORD = 'GECC-2026'; // example password — change before distribution
+const GATE_UNLOCK_KEY = 'gecc_survey_unlocked';
+
+(function initPasswordGate() {
+  if (sessionStorage.getItem(GATE_UNLOCK_KEY) === '1') {
+    document.body.classList.remove('locked');
+    const gate = document.getElementById('passwordGate');
+    if (gate) gate.style.display = 'none';
+    return;
+  }
+  const form = document.getElementById('gateForm');
+  const input = document.getElementById('gateInput');
+  const errorEl = document.getElementById('gateError');
+  const gate = document.getElementById('passwordGate');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const val = (input.value || '').trim();
+    if (val === SURVEY_PASSWORD) {
+      sessionStorage.setItem(GATE_UNLOCK_KEY, '1');
+      document.body.classList.remove('locked');
+      gate.style.display = 'none';
+    } else {
+      errorEl.textContent = 'Incorrect password. Please try again.';
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
 
 let selectedRole = null;
 let selectedTenure = null;
